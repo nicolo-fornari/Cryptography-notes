@@ -119,6 +119,71 @@ $\pi(X,x_0)$ è un gruppo rispetto al cammino prodotto di classi di equivalenza 
 $H_q(C) := Z_q(C) / B_q(C)$ q-esimo gruppo di omologia\\
 dove $Z_q(C) := \ker \delta_q $ e $ B_q(C) := $Im$\delta_{q+1}$
 \newpage
+\section{Teoremi sui gruppi e congruenze}
+
+\textbf{Def.} funzione di Eulero
+$\varphi (n) = \#U(\mathbb{Z}/n\mathbb{Z}) = \{a \in \mathbb{Z}: 0 \leq a < n,(a,n)=1\}$\\
+\textbf{Lemma:} se p è primo $\varphi(p)=p-1$\\
+\textbf{Prop.} $\varphi(p^k) = p^k-p^{k-1}$\\
+\textbf{Thm.} se $(m,n)=1$ allora $\varphi(mn)= \varphi(m)\varphi(n)$\\\\
+\textbf{Prop.} $\sum_{d|n}\varphi(d) =n$\\\\
+\textbf{Teorema di Lagrange}\\
+Sia G un gruppo finito e H un suo sottogruppo, $|G:H|$ l'indice di H in G (il numero di classi laterali di H in G) allora $|G| = |H| |G:H|$\\
+Corollario: il periodo di $a \in G$ divide l'ordine di G\\\\
+\textbf{Teorema di Eulero Fermat}\\
+Se $(a,n)=1$ allora $a^{\varphi(n)} \equiv 1 \mod n$\\\\
+\textbf{Piccolo teorema di Fermat}\\
+$a^{p} \equiv a$ (mod p)\\\\
+\textbf{Teorema di Wilson}\\
+$(p-1)! \equiv -1 \mod p$\\\\
+\textbf{Prop.} se $p \equiv 1 \mod 4$ allora $-1$ è un quadrato mod p ovvero $\exists x$ t.c. $x^2 \equiv -1 \mod p$\\\\
+\textbf{Prop.} se $p=2^n+1$ è un primo allora 3 è una radice primitiva mod p\\
+\subsection{Gruppo degli elementi invertibili}
+\textbf{Prop.} $(1+ap)^{p^{\beta -2}} \equiv 1+ap^{p^{\beta -1}} \mod p^\beta$\\\\ 
+\textbf{Lemma:}  sia $p > 2$ primo e $a$ un intero non multiplo di p.\\
+Allora $1+ap$ ha ordine $p^{\alpha-1}$ mod $p^\alpha$\\\\
+\textbf{Lemma:} se $a$ non è multiplo di 2 la classe resto $1+4a \mod 2^\alpha$ ha ordine $2^{\alpha-2}$\\
+Oss. è la versione del lemma precedente per $p=2$\\\\
+\textbf{Prop} il gruppo $U(\mathbb{Z}/p^\alpha\mathbb{Z})$ è ciclico per $p>2$ primo\\\\
+\textbf{Teorema} $U(\mathbb{Z}/m\mathbb{Z})$ è ciclico se e solo se $ m=2,4,p^k,2p^k $\\\\
+\textbf{Prop.} Supponiamo esista una radice primitiva $\mod m$ con $(a,m)=1$\\
+Allora $a$ è una potenza n-esima (cioè $x^n \equiv a \mod m$ ha soluzione) $\iff a^{\frac{\varphi(m)}{(n,\varphi(m))}}=1$\\
+Oss. deriva dalla proposizione più generale sui gruppi ciclici\\\\
+\textbf{Prop.}sia $p>2$ primo, $p \nmid a,p \nmid n$, se $x^n \equiv a \mod p$ è risolubile allora anche\\
+$x^n \equiv \mod p^e$ è risolubile $\forall e \geq 1$
+\subsection{Legge di reciprocità quadratica}
+\textbf{Def.} di resto quadratico e simbolo di Legendre\\\\
+\textbf{Prop. di Eulero} $a^{\frac{p-1}{2}}\equiv (\frac{a}{p}) \mod p$\\
+\textbf{Corollario} $(\frac{ab}{p}) = (\frac{a}{p})(\frac{b}{p})$,  
+ $(\frac{1}{p}) = 1$,  $(\frac{-1}{p}) = (-1)^{\frac{p-1}{2}}$
+\\\\
+\textbf{Legge accessoria} $$\bigg (\frac{2}{p}\bigg) \equiv (-1)^{\frac{p^2-1}{8}}$$\\
+cioè 1 se $p \equiv \pm 1 \mod 8, -1$ se  $p \equiv \pm3 \mod 8$\\\\
+\textbf{Teorema (Legge di reciprocità quadratica)} $$\bigg ( \frac{p}{q} \bigg) \equiv (-1)^{\frac{(p-1)(q-1)}{4}} \bigg ( \frac{q}{p} \bigg)$$
+Che si può riformulare come: $(\frac{p}{q}) (\frac{q}{p}) = -1$ se $p,q \equiv -1 \mod 4$, 1 altrimenti\\\\
+\textbf{Def} somma di Gauss
+$$ g_a= \sum_{t=0}^{p-1} \big ( \frac{t}{p} \big ) \zeta^{at}$$
+Oss di fatto è il prodotto fra un carattere moltiplicativo e uno additivo\\\\
+\textbf{Lemma}
+$$ \sum_{t=0}^{p-1} \big ( \frac{t}{p} \big ) = 0$$
+\textbf{Lemma} se $p \nmid a $
+$$ \sum_{t=0}^{p-1} \zeta^{at} = 0$$
+Oss sono ricnonducibili al caso più generale:\\\\
+\textbf{Lemma} $\sum_{g\in G} \chi (g) = 0$ se $\chi$ non è il  carattere banale\\\\
+\textbf{Prop}  $g_a = (\frac{a}{p} ) g_1$\\\\
+\textbf{Prop} $g_1^2 = (-1)^{\frac{p-1}{2}}p$
+\newpage
+\section{Numeri di Mersenne,Fermat e Carmichael}
+\textbf{Def} $M_p = 2^p-1$ è detto numero di Mersenne\\
+\textbf{Def} $F_n := 2^{2^n}+1$ è detto numero di Fermat\\
+\textbf{Def} p si dice \textit{elite prime} se è una radice primitiva modulo tutti i primi di Fermat salvo un numero finito\\\\
+\textbf{Teorema di Pepin} $F_n$ è primo $\iff 3^{\frac{F_n -1}{2}}\equiv -1\ \mod F_n$
+
+\subsection{Divisori della forma $b^n \pm 1$}
+\textbf{Prop} $b,n>1$ interi. Se un primo $p | b^n-1$ allora o $p|b^d-1$ per un divisore proprio d di n o $p\equiv 1 \mod n$\\\\
+\textbf{Prop} $b,n>1$ interi. Se un primo $p>2$,$p | b^n+1$ allora o $p|b^d+1$ per un divisore proprio d di n con $\frac{n}{d}$ dispari o $p\equiv 1 \mod 2n$\\\\
+\textbf{Prop} un divisore primo p di $F_k$ con $k>1$ soddsfa $p\equiv 1 \mod 2^{k+2}$
+\newpage
 \section{Anelli}
 \subsection{The ring of integers}
 The rings of integers of number fields may be divided in several classes:\\
@@ -134,9 +199,6 @@ The norm-Euclidean quadratic fields have been fully classified, they are $\mathb
 \textbf{Prop.} un numero complesso è un intero algebrico sse il suo polinomio minimo su Q ha coefficienti interi.\\\\
 \textbf{Thm} se $D \equiv 2,3$ (mod 4) allora $\mathbb{Q}(\sqrt D) = \mathbb{Z}[\sqrt D]$\\
 se $D \equiv 1$ (mod 4) allora $\mathbb{Q}(\sqrt D) = \mathbb{Z}[\frac{1+ \sqrt D}{2}]$
-%
-%		Ideali
-%
 \subsection{Ideale}
 \textbf{Def.} sia A un anello,$I \subset A$ si dice \textbf{ideale} di A se\\
 1) I è sottogruppo di $(A,+,\times)$\\
@@ -162,9 +224,6 @@ Un dominio è un anello commutativo con unità in cui vale la legge di annullame
 Su un dominio è definita una funzione Norma\\
 \textbf{Oss.} $\varepsilon$ è invertibile $\implies N(\varepsilon)=1$\\
 se vale anche l'altra implicazione la norma di dice \textit{speciale}
-%
-%		Dominio Euclideo
-%
 \textbf{Dominio Euclideo}
 È un dominio dotato di una norma in cui è possibile fare la divisione con resto.\\\\
 \textbf{Definizione (1)}\\
@@ -184,9 +243,6 @@ Se questo vale si dice che R è \textit{norm-Euclidean}\\\\
 \textbf{Oss.} in un dominio euclideo primo = irriducibile\\
 \textbf{Thm} ogni dominio euclideo è un PID\\
 \textbf{Thm} ogni dominio euclideo è un UFD
-%
-%		PID
-%
 \subsection{PID}
 A si dice PID (Principal ideal domain) se è un dominio è ogni ideale di A è principale.\\
 \textbf{Thm} PID $\implies$ UFD\\\\

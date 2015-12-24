@@ -1,0 +1,675 @@
+\documentclass[10pt,a4paper]{book}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\author{Nicolò Fornari}
+\begin{document}
+\chapter{Security Engineering}
+\section{Introduction}
+\textbf{Confidentiality:} preventing unauthorized disclosure of information\\\\
+\textbf{Availability:} preventing of unauthorized withholding of information or resources \\\\
+\textbf{Integrity:}  preventing unauthorized modification of information
+\begin{itemize}
+\item Data Integrity: data are not modified by unauthorized individuals 
+\item System Integrity: system performs its intended functions in an unimpaired manner, free from deliberate or inadvertent unauthorized manipulation of the system
+\end{itemize}
+\textbf{Accountability:} (track back the action of somebody) \\
+the property of tracing security related actions/events to the responsible entity \\\\
+\textbf{Non-repudiation:}\\
+the property of having unforgeable evidence that an event/action has occured \\
+non-repudiation  of origin,  non repudiation of delivery \\\\
+\textbf{Privacy} (Often grouped with Confidentiality) \\
+the right of an individual to control what data are collected and stored by who and to whom are disclosed \\\\
+\textbf{Unauthorized disclosure:} Exposure, Interception, Inference, Intrusion \\
+\textbf{Deception:} Masquerade, Falsification, Repudiation\\
+\textbf{Disruption:} Incapacitation, Corruption, Obstruction\\
+\textbf{Usurpation:} Misappropriation, Misuse\\
+\textbf{Threat:} a potential cause of an unwanted incident
+\newpage
+\section{Terminology}
+\textbf{Asset:} something to which a party assigns value and hence for which the party requires protection
+\begin{itemize}
+\item Hardware:  computer systems, data storage, data communication devices
+\item Software: operating systems, system utilities, applications, services
+\item Data:  files and databases
+\item Communication Lines: local and wide area network communication links, router, gateways..
+\end{itemize}
+
+
+\begin{itemize}
+\item Active:  aim to modify system's assets or to affect their operation\\
+	Preventing them is harder than detecting them\\
+	e.g reply attack, SQL injection
+\item Passive: aim to learn or make use of information that not affect the systemsassets\\
+	Detecting them is harder than preventing them\\
+	e.g traffic analysis 
+\end{itemize}
+
+\section{Security Management}
+
+\begin{enumerate}
+\item Identify Threats and Risk to your assets
+\item itigate those with Security Controls
+\item Deploy the Controls
+\item Monitor their effectiveness
+\item Check security indicators
+\item Revise periodically
+\end{enumerate}
+
+\section{GRC}
+
+\textbf{Governance}\\
+policies, laws, culture and institutions that define how an organization is managed/run and drives the strategy\\\\
+\textbf{Risk Management}\\
+the coordinated activities that direct and control an organization's risks\\\\
+\textbf{Compliance}\\
+the act of adhering to regulations as well as corporate policies and procedures
+\newpage
+\emph{Example: San Raffaele}\\
+Private Hospitals Manage Drug Dispensation to Patients on behalf of Health Care Authority and Claim Reimboursement Afterward
+\begin{itemize}
+\item Some drugs are very expensive: huge financial issues 
+\item Process is highly regulated 
+\item Many steps are run by external actors
+\end{itemize}
+\textbf{Privacy and security issues}\\
+Protect patient identity \\
+Authenticate patients, doctors and nurses\\\\
+Target is to "govern" the process, manage the risks and show compliance with law and show "we are in control"\\\\
+Why is it important?\\
+Investors in North America and Western Europe will pay a premium of 14 $\%$ for companies with good governance.\\\\
+Companies adopt GRC to
+\begin{enumerate}
+\item Comply with regulations 
+\item Avoid failing an audit 
+\item Learn from a bad experience 
+\item Managing risks 
+\item Insure, improve and optimize an existing business
+\end{enumerate}
+\newpage
+\section{Security Management}
+It is a process used to achieve and maintain appropriate levels of confidentiality, integrity, availability, accountability, authenticity inside an organization.\\\\
+Some standards specify how to do it \\
+ISO/IEC 27001 is the "how" \\
+ISO/IEC 27002 is the "what" \\\\
+Many different variations on how... \\
+COSO, COBIT, SABSA, etc. etc.\\\\
+COSO: Committee of Sponsoring Organizations of the Treadway Commission\\
+	Coso developed the Enterprise Risk Management\\\\
+COBIT: Control Objectives for Information and related Technology\\\\
+The ISO/IEC 2700x Family of Standards
+\begin{itemize}
+
+\item ISO/IEC 27001\\
+Describes the process to establish, implement, operate, monitor and maintain a security management process
+\item ISO/IEC 27002\\
+Provides a list of security control objectives and best practice 
+security controls
+\item ISO/IEC 27005 \\
+Security risk management
+\end{itemize}
+
+\chapter{IAM}
+\section{IAM - Identity and Access Management}
+\textbf{Definition 1} The prevention of unauthorized use of a resource, including the prevention of use of a resource in an unauthorized manner.\\\\
+\textbf{Definition 2} includes people, processes, and systems that are used to manage access to enterprise resources by assuring that the identity of an entity is verified, then granting the correct level of access based on the protected resource, this assured identity, and other context information.\\\\
+
+\subsection{Policy}
+\textbf{Definition} A specification of what is a "correct level of access" and who are the "identities" for which this level is appropriate and the "contextual conditions".\\
+\textbf{Policy elements:}
+\begin{itemize}
+\item Subject: user or process
+\item Object: files,directories,records (also a subject can be an object)
+\item Access right: read,write,execute,delete,create,search
+\end{itemize}
+\textbf{Policy components:}
+\begin{itemize}
+\item Target: subject,action,object
+\item Rule: if Condition is satisfied then applies the Effect (eg permit/deny) upon the Target
+\item Evaluation results: permit; Deny; Indeterminate;
+\item Evaluation Procedures (for rule selection): deny-ovveride,permit-ovverride
+\item Obligations: Security Actions that must be performed after the decision (bad practice)
+\end{itemize}
+
+\textbf{Types of policy rules}\\
+Authorization: if conditions satisfied THEN then grant/deny access\\
+Authorization with obligations: if conditions satisfied THEN then grant/deny access AND \\
+check user FULFILL Obligation\\\\
+\textbf{Example:}
+\begin{itemize}
+\item Time: "file A must be deleted whithin a week"
+\item Cardinality: "Play game at most twice before paying it"
+\item Event defined: "If the document is revoked it must not be used"
+\item Purpose: for personal use only
+\item Environment: allow usage if firewall is installed
+\end{itemize}
+
+\subsection{Key components of IAM}
+
+\begin{itemize}
+\item Authentication: The verification an identity claimed by (or on behalf
+of) a system entity\\
+Eg. Social Security Number in Italy
+\item Authorization: The granting of a right (or permission) to the claimant
+system entity to access a system resource\\
+Eg. identity card in Italy, boarding pass in an airport
+\item Audit: The monitoring and processing of user accesses to
+system resources\\
+Eg. Assuming A. and I. are already done, decides whether identified principal can get access to resource
+\end{itemize}
+
+\section{Authorization}
+
+\begin{itemize}
+\item PAP - Policy Administration Point\\
+The (logical) system entity that creates a policy or policy set
+\item PEP - Policy Enforcement Point\\
+The (logical) system entity that performs access control, by asking decision requests and enforcing authorization decisions\\
+Eg. file system
+\item PDP - Policy Decision Point\\
+The (logical) system entity that evaluates applicable policy and renders an authorization decision
+\item PIP - Policy Information Point\\
+The (logical) entity that acts as a source of attribute values
+\end{itemize}
+
+\textbf{Authorization}\\
+Use a reactive PEP + stateless PDP.\\
+Easy to implement: If the users don't ask anything you don't need to remember and do anything.\\\\
+\textbf{(History Based) Authorization}\\
+Use a reactive PEP + stateful PDP.\\
+Reasonable to implement: If the users don't do anything you might need to remember something but don't need to do anything\\\\
+\textbf{True obligation}\\
+Use a proactive PEP (obligation monitor) + stateful PDP\\
+Costly to implement: even if the user don't do anything you must remember something, monitor users and eventually do something\\\\
+\emph{Example 1} this is the reason why bancomat is free while credit card is not. With credit card user is monitored to check if he pays the amount due to the bank while with bankomat there is no need for it.\\\\
+\emph{Example 2} Airport Security control before going into the gate
+\begin{itemize}
+\item Generic authorization "Anybody without forbidden items"
+\item List of "Forbidden Items" is provided by PAP
+\item X-ray scanner provide attributes
+\item Security officer at entrance is PDP and PEP
+\end{itemize}
+
+\subsection{Access controls}
+
+\begin{itemize}
+\item \textbf{Discretionary Access Control}\\
+Policy decided by individual subjects\\
+Access based on identity of subjects\\
+Structures: access matrix,capability list,access control list
+\item \textbf{Role based Access Control}\\
+Policy decided by system\\
+Roles are assigned access rights to resources:\\
+Users are assigned to roles\\
+Inherit access rights of the role they play\\
+Possibly add constraints or inheritance\\\\
+\emph{Example:} Assistant professor,Post Doc,Phd student
+\item \textbf{Mandatory Access Control}\\
+Policy decided by system\\
+Subject assigned to security levels (clearance), Object assigned to security labels\\
+Access based on matching objects' labels to subjects' clearances
+\item \textbf{Credential based Access Control}\\
+Access based on attributes qualifying a subject
+\end{itemize}
+
+\subsection{Bell-LaPadula Confidentiality model}
+It prevents low security level subjects to read high level security objects.\\
+\textbf{BLP elements}
+\begin{itemize}
+\item S: set of subjects
+\item O: set of objects
+\item A: set of access operations (read,write,append,exceute)
+\item L: set of partially ordered security levels\\
+Top secret, secret,confidential,unclassified
+\end{itemize}
+\textbf{BLP state}
+\begin{itemize}
+\item $fs: S \to L$ assign to a subject maximum security level
+\item $fc: S \to L$ assign to a subject the current security level
+\item $fo: O \to L$ assign to an object its seurity level
+\end{itemize}
+\textbf{BLP properties}
+No read-up security policy:\\
+A subject can only read an object of less or equal security level: $fo(o) \leq fs(s)$\\\\
+No write-down policy\\
+A subject can only write objects of greater of equal security level: $fs(s) \leq fo(s)$\\
+\textbf{Remark} a high level subject is not able to send messages to a low level subject (there are several ways to escape from this restriction)\\\\
+\textbf{Limitations}
+\begin{itemize}
+\item Restricted to confidentiality
+\item No policies for changing access rights
+\item BLP contains covert channels (information flow that is not controlled by the model)\\
+Telling a subject that a certain operation is not permitted constitutes information flow
+\end{itemize}
+\newpage
+\section{Authentication}
+
+What is authentication?\\
+It is the process of verifying a claimed identity.\\
+It consists of two main steps:
+\begin{itemize}
+\item Identification (you announce who you are)
+\item Verification (you prove who you are)
+\end{itemize}
+\textbf{Means of authentication}
+\begin{itemize}
+\item Something the individual knows: password-based
+\item Something the individual owns: token-based
+\item Something the individual is: static biometric
+\item Something the individual does: dynamic biometrics
+\item Something the individual is: location based
+\end{itemize}
+
+\subsection{Password authentication}
+
+Typical issues:
+\begin{itemize}
+\item how to get the password to the user
+\item forgotten passwords
+\item password guessing
+\item protection of the password file
+\end{itemize}
+Dangers:
+\begin{itemize}
+\item User accounts without password
+\item Unchanged default password
+\item Badly chosen passwords
+\item Passwords stored in the clear
+\item Passwords transmitted in the clear
+\item User forgets passwords
+\end{itemize}
+\textbf{Proactive password checking}
+\begin{itemize}
+\item Rule enforcement plus user advice\\
+8+ chars, upper/lower/numeric/punctuation
+\item Password cracker\\
+time and space issues
+\item Markov model\\
+generates guessable passwords and reject the ones who can be generated
+\item Bloom filter\\
+Used to build a table based on dictionary\\
+Check password against this table
+\end{itemize}
+\textbf{Password file access control}\\
+Block offline guessing attacks by denying access to encrypted passwords\\
+Make it available only to privileged users and often using a separate shadow password file.\\
+There are vulnerabilities:
+\begin{itemize}
+\item exploit OS bug
+\item accident with permissions making it readable
+\item users with same passwords on other systems
+\item access from unprotected backup media
+\item sniff password in unprotected network traffic
+\end{itemize}
+\textbf{Limit validity of passwords}
+\begin{itemize}
+\item Limit password validity forcing users to change it regularly and preventing them from reverting to old passwords
+\item Limit attempts of testing password validity
+\item Inform users by displaying time of last login
+\end{itemize}
+\textbf{Authentication}\\
+\textbf{Weak authentication of a remote user}\\
+For remote users passwords could be sent by mail,email,phone or entered by user on a web page.\\
+How secure is it? A letter containing a password could be stolen\\\\
+\textbf{Stronger authentication of a remote user}\\
+Send passwords that are valid only for a single log-in request\\
+Request confirmation on a different channel (send confirmation by SMS)\\\\
+countermeasures to spoofing attacks
+\begin{itemize}
+\item Mutual authentication (the system has to authenticate itself to the user)
+\item Trusted path (guarantees the user communicates with the system)
+\item Log monitoring
+\end{itemize}
+\newpage
+\subsection{Something you hold}
+\textbf{Memory card}
+\begin{itemize}
+\item store but do not process data
+\item magnetic stripe card (eg. bank card)
+\item electronic memory card
+\item used alone for physical access
+\item with password/PIN for computer use
+\item drawbacks of memory cards: need special reader,loss of token issues
+\end{itemize}
+\textbf{Smartcard}
+\begin{itemize}
+\item It has its own processor
+\item Secrets are used but not disclosed and are tamperproof
+\end{itemize}
+\chapter{WebApp and Database}
+
+\section{Database}
+\textbf{Design requirements}
+\begin{itemize}
+\item \textbf{Precision}\\
+protect sensitive information while revealing as much nonsensitive information as possible
+\item \textbf{Internal consistency}\\
+the entries in the database obey some prescribed rules
+\item \textbf{External consistency}\\
+The entries in the database are correct
+\end{itemize}
+\textbf{Database security threats:} 
+\begin{itemize}
+\item Excessive and unused privileges\\
+Example: a bank employee whose job requires the ability to change only account holder contact information may take advantage of excessive database privileges and increase the account balance of a colleague's savings account 
+\item Abuse of privileges\\
+Example: Consider an internal healthcare application used to view individual patient records via a custom Web interface\\
+The Web application normally limits users to viewing an individual patient's healthcare history 
+However, a rogue user might be able to circumvent these restrictions and copy electronic healthcare
+records on his laptop
+\item Unmanaged sensitive data\\
+Example: Forgotten databases may contain sensitive information
+\item SQL injection
+\item Storage media exposure\\
+Backup storage media is often completely unprotected from attack
+\end{itemize}
+\newpage
+\textbf{Database encryption}
+\begin{itemize}
+\item Entire database: very inflexible and inefficient
+\item Individual fields: simple but inflexible
+\item Records (rows) or columns (attributes): best choice
+\end{itemize}
+\textbf{Different kind of encryption:}
+\begin{itemize}
+\item Order-preserving\\
+$x \le y \implies E_{op}(x) \le E_{op}(y)$
+\item Deterministic\\
+$x=y \implies E_{det}(x) = E_{det}(y)$
+\item Additively homomorphic\\
+$D_{hom}(E_{hom}(x)*E_{hom}(y)) = x+y$
+\end{itemize}
+\textbf{Remark:} perfomance is heavily affected.\\\\
+\textbf{Statistical database security}\\
+Sensitivity level of an aggregate computed over a group of values may differ from the sensitivity levels of the individual elements.\\
+The user is allowed to make queries over groups of values but he can infer information by combining results from different queries.\\
+\textbf{Countermeasures}
+\begin{itemize}
+\item Suppress obviously sensitive information
+\item Disguise the data \\
+Randomly modify entries in the database so that an individual
+query will give a wrong result although the statistical queries still would be correct
+\item Track what the user know
+\end{itemize}
+\chapter{Networking/Infrastructure}
+
+\section{Network}
+\textbf{Network attacks:}
+\begin{itemize}
+\item Attive attacks\\
+The goal is to modify the content
+\begin{itemize}
+\item Impersonate legitimate parties (masquerade)
+\item Replay or retransmit
+\item Modify the content
+\item Launch denial of service
+\end{itemize}
+\item Passive attacks\\
+Traffic analysis: the goal is to obtain information, content is not modified
+\item TCP attacks
+\end{itemize}
+\textbf{Countermeasures}
+\begin{itemize}
+\item IPSec
+\item SSL/TLS
+\item Kerberos
+\item Firewalls
+\item Intrusion detection systems
+\item Honeypot
+\end{itemize}
+\textbf{Remark} the first three are security protocols, the last three are security services.\\\\
+Network protocols were designed to rely messages between trusted partners. This lead to uninteded consequences: addresses and content are forgeable, content and rely operators can be malicious.
+\subsubsection{SSL/TLS}
+Transport Layer Security (TLS) protocol is based on SSL (Secure Socket Layer) protocol.\\
+\textbf{Handshake protocol}\\
+Use public-key cryptography to establish a shared secret key between the client and the server.\\
+Client and server negotiate version of the protocol and the set of cryptographic algorithms to be used
+\begin{itemize}
+\item A client sends a \textbf{ClientHello} message specifying the highest TLS protocol version it supports, a random number, a list of suggested cipher suites and suggested compression methods. If the client is attempting to perform a resumed handshake, it may send a session ID.
+\item The server responds with a \textbf{ServerHello} message, containing the chosen protocol version, a random number, CipherSuite and compression method from the choices offered by the client. To confirm or allow resumed handshakes the server may send a session ID. The chosen protocol version should be the highest that both the client and server support.
+\item The server sends its \textbf{Certificate} message (optional)
+\item The server sends its \textbf{ServerKeyExchange} message (optional)
+\item The server sends a \textbf{ServerHelloDone} message, indicating it is done with handshake negotiation.
+\item The client responds with a \textbf{Certificate} message, which contains the client's certificate.
+\item The client sends a \textbf{ClientKeyExchange} message, which may contain a PreMasterSecret\\
+This PreMasterSecret is encrypted using the public key of the server certificate.
+\item The client sends a \textbf{CertificateVerify} message, which is a signature over the previous handshake messages using the client's certificate's private key. This signature can be verified by using the client's certificate's public key. This lets the server know that the client has access to the private key of the certificate and thus owns the certificate.
+\item  The client and server then use the random numbers and PreMasterSecret to compute a common secret, called the "master secret"
+\end{itemize}
+\subsection{Firewalls}
+\textbf{Packet filters}: work at Network and Transport Layer
+\begin{itemize}
+\item Allow the packet to go through
+\item Drop the packet (Notify Sender/Drop Silently)
+\item Alter the packet (NAT)
+\item Log information about the packet
+\end{itemize}
+\textbf{Proxies} work at application level\\
+Proxy acts as a server for clients requests (validate client requests)\\
+Proxy act as a client and connects to the destination server\\
+\textbf{Limitations}
+\begin{itemize}
+\item No protection against insider attacks
+\item Deep packet inspection only works if you do not have encrypted connection
+\item No detection of protocol tunneling
+\item No encrypted message filtering
+\end{itemize}
+\subsection{Intrusion detection systems}
+\begin{itemize}
+\item \textbf{Signature based}\\
+It Uses known pattern matching to signify attack.\\
+Advantages: it is fast, easy to implement and update.\\ 
+Disadvantages: it cannot detect attacks for which it has no signature
+\item \textbf{Anomaly based}\\
+It uses statistical model or machine learning engine to characterize normal usage behaviors.\\
+Advantages: it can recognize authorized usage that falls outside the normal pattern or it can detect attempts to exploit new and unforeseen vulnerabilities.\\
+Disadvantages: generally slower, more resource intensive compared to signature-based IDS, greater complexity, difficult to configure, higher percentages of false alerts
+\item \textbf{Network based}\\
+It examines raw packets in the network passively and triggers alerts\\
+Advantages: easy deployment, unobtrusive, difficult to evade if done at low level of network operation.
+Disadvantages: different hosts process packets differently, it needs to create traffic seen at the end
+host, it needs to have the complete network topology and complete host behavior
+\item \textbf{Host based}\\
+Runs on single host.\\
+Advantages: more accurate than NIDS, less volume of traffic so less overhead\\
+Disadvantages: deployment is expensive, what happens when host get compromised?
+\end{itemize}
+\subsection{Honeypot}
+Generally, a honeypot consists of data (for example, in a network site) that appears to be a legitimate part of the site but is actually isolated and monitored, and that seems to contain information or a resource of value to attackers, which are then blocked. 
+\chapter{OS security}
+\textbf{Sandbox}\\
+Environment in which actions of process are restricted according to security policy.\\
+A sandbox does not emulate computer's hardware, it requires only software support.\\
+\textbf{Virtual Machine}\\
+A program that simulates hardware of computer system and reports results back to Application.\\
+It emulates computer's hardware, it requires hardware support. Guest entity cannot access underlying computer system
+\chapter{Cloud security}
+\textbf{Cloud architecural solutions}
+\begin{itemize}
+\item Software as a service eg. gmail,google apps, force.com
+\item Platform as a service eg. microsoft azure
+\item Infrastructure as a service eg. Amazon EC2,Rackspace
+\end{itemize}
+\textbf{Cloud scenarios}
+\begin{itemize}
+\item runnning one or more applications not supported bu host os
+\item multiple servers could be run on a single physical server
+\item duplicating specific environments
+\item creating a protected environment
+\end{itemize}
+\textbf{Potential objectives}
+\begin{itemize}
+\item Network analysis/tampering
+\item Application data exfiltration/tampering
+\item Control of VM
+\item Escape from VM
+\item Cartography
+\end{itemize}
+
+\textbf{ASP:} application service provider\\
+\textbf{Reasons for cloud virtualization}
+\begin{itemize}
+\item A large server can host many guest virtual machine
+\item A virtual machine can be more easily controlled and inspected from outside compared to a physical one and its configuration is more flexible.
+\item A new VM can be provisioned as needed without the need for an up-front hardware purchase.\\
+VM can easily be relocated from one physical machine to another as needed.
+\end{itemize}
+\textbf{Capacity planning}\\
+Capacity must exceed maximum demand if you want to meet demand at all times.\\
+ASP vs Cloud: it is crucial if you know in advance the number of users.
+\textbf{Interesting attack:} a guest OS does not know it is running on a VM so it does not clean memory after use. Several VM coexhist on the same physical machine...
+\chapter{Assessment}
+\section{UTM}
+
+\textbf{Terminology}\\
+UAV: Unmanned Aerial Vehicles\\
+UAS: Unmanned Aerial System\\
+UTM: UAS Traffic Management\\\\
+What? "The UTM will provide authentication, airspace design, airspace corridors, and dynamic
+geofencing, weather integration, constraint management (congestion prediction), sequencing
+and spacing as needed, trajectory changes to ensure safety, contingency management,
+separation management, transition locations and locations with NAS, and geo-fencing design
+and dynamic adjustments".\\\\
+Why? Many civilian applications of Unmanned Aerial Systems (UAS) have been imagined ranging
+from remote to congested urban areas, including goods delivery, infrastructure surveillance,
+agricultural support, and medical services delivery\\
+However, key infrastructure to enable and safely manage widespread use of low-altitude
+airspace and UAS operations therein does not exist\\\\
+\textbf{Airspace classification}
+\begin{itemize}
+\item Class A\\
+above 18,000 feet including the airspace overlying seas within 12 nautical miles
+\item Class B\\
+from the surface to 10,000 feet above the nation's busiest airports
+\item Class C\\
+from surface to 4,000 feet above airports with operational control tower, serviced by a radar
+approach control, and sizeable operations or passengers.
+\item Class D\\
+from the surface to 2,500 feet above airports that have an operational control tower.
+\item Class E\\
+None of the above but still controlled (eg military areas)
+\item Class G\\
+Unregulated one. Typically below 1,200 feet from surface and 5+ miles away from airports
+\end{itemize}
+\textbf{Current problems}
+\begin{itemize}
+\item Lost link\\
+Happens frequently even on military grade aircrafts\\
+Key requirements is predictability of what happens after that
+\item Latency\\
+Both Link latency and operator latency
+\item Levels of automation
+Low automation makes difficult to predict what happens after link is lost\\
+High automation makes difficult to predict what happens if some gear is
+malfunctioning
+\item Measured response\\
+UAV similar to Manned in time (takes time for the operator to react)\\
+but lack sense of place (fly upside down and don't understand that)
+\item Detect and avoid
+\end{itemize}
+\subsection{UTM models}
+\textbf{UTM service provider viewpoint}\\
+\begin{itemize}
+\item \textbf{Portable UTM system}\\
+Arrive, set-up, operate, and leave (be able to move from one location to another)\\
+Support humanitarian, agricultural and other applications
+\item \textbf{Persistent UTM system}\\
+Sustained, real-time, and continuous operations\\
+Sample application: manage national parks, good transportation between cities, small goods transportation in
+urban areas
+\end{itemize}
+\textbf{UAS owner viewpoint}
+\begin{itemize}
+\item \textbf{Remotely piloted vehicle}\\
+Normal airplane\\
+Pilot is just going to an office instead of boarding the plane
+\item \textbf{Remoted piloted fleet}\\
+Separation and Management control automated
+\begin{enumerate}
+\item Vehicle to vehicle communications
+\item Vehicle to service communications
+\item Most routing, separation management, congestion optimization automated
+\end{enumerate}
+Operators only intervene in offnominal cases
+\end{itemize}
+\subsection{UTM Service Operational Requirements}
+\begin{itemize}
+\item Airspace management and zone separation\\
+reduce risk of accidents, impact to other operations, and population’s
+concerns\\
+Vertical and horizontal
+\item Integration of meteo data\\
+Avoidance of severe weather/wind areas
+\item Congestion management (and possibly prediction)\\
+Currently done with routes negotiations and centralized air traffic management
+\item Maintain safe separation (mission safety)\\
+Avoidance of terrain and man-made artifacts\\
+Avoidance of other aircrafts (classical notion of separation)
+\item Authenticated operations\\
+avoid unauthorized airspace use
+\end{itemize}
+\subsection{Role of UAS fleet manager}
+\begin{itemize}
+\item \textbf{Cloud based UTM Service}\\
+UAS manager accesses through internet\\
+\item \textbf{Initial set-up}\\
+Generates and files a nominal trajectory\\
+Adjusts trajectory in case of other congestion or pre-occupied airspace\\
+Verified for fixed,human made, or terrain avoidance\\
+Verifies for usable airspace and any airspace restrictions\\
+Verifies for wind and weather forecast and associated airspace constraints
+\item \textbf{Run-time control}\\
+Monitors trajectory progress and adjust trajectory if needed\\
+Supports contingency (rescue)
+\item \textbf{Allocated airspace changes dynamically as needs change}
+\end{itemize}
+
+\subsection{Role of UTM service provider}
+\begin{itemize}
+\item \textbf{Authentication}
+Similar to vehicle identification number, approved applications only
+\item \textbf{Airspace design, adjustments and geo-fencing}\\
+Corridors, rules of the road, altitude for direction, areas to avoid
+\item \textbf{Communication, navigation and surveillance}\\
+Needed to manage congestion,separation, performance characteristics and monitoring conformance inside geo-fenced areas.
+\item \textbf{Separation management}\\
+May require sensing infrastructure and avoidance infrastracture\\
+Part of this infrastructure may be on aircrafts
+\item \textbf{Weather integration}
+Wind and weather detection and prediction for safe operations
+\item \textbf{Contingency management}\\
+Not in NASA scenario but somebody must do it.
+\end{itemize}
+
+\subsection{UTM services according to NASA}
+
+\textbf{Regulatory Services}
+\begin{itemize}
+\item \textbf{Security services}\\
+Vehicle registration\\
+User authentication\\
+Flight monitoring\\
+System health monitoring
+\item \textbf{Flight services}\\
+Flight planning\\
+Scheduling and demand management\\
+Separation assurance\\
+Contingency management
+\item \textbf{UAS fleet owner is bound by response}
+\textbf{Information Services}
+\begin{enumerate}
+\item Airspace definition
+\item Weather information
+\item Terrain and obstructions
+\item Traffic operations
+\end{enumerate}
+\textbf{UAS fleet owner use them to optimize its plan}
+\end{itemize}
+\chapter{True stories}
+\textbf{Google engineer's David Braksdale}\\
+\textbf{HBGary}\\
+\textbf{Confused deputy}\\
+\textbf{John Rusnak}\\
+
+\end{document}
