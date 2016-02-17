@@ -150,7 +150,15 @@ Oss. è la versione del lemma precedente per $p=2$\\\\
 Allora $a$ è una potenza n-esima (cioè $x^n \equiv a \mod m$ ha soluzione) $\iff a^{\frac{\varphi(m)}{(n,\varphi(m))}}=1$\\
 Oss. deriva dalla proposizione più generale sui gruppi ciclici\\\\
 \textbf{Prop.}sia $p>2$ primo, $p \nmid a,p \nmid n$, se $x^n \equiv a \mod p$ è risolubile allora anche\\
-$x^n \equiv \mod p^e$ è risolubile $\forall e \geq 1$
+$x^n \equiv \mod p^e$ è risolubile $\forall e \geq 1$\\\\
+\textbf{Teorema di isomorfismo}\\
+Sia $f: G \to H$ un omomorfismo di gruppi. Allora $Ker(f) \lhd G$ e $G/Ker(f) \simeq Im(f)$\\\\
+\textbf{Def} sia $G$ un gruppo, si definisce \emph{centro} l'insieme\\
+$ C := \{c \in G: ac= ca \forall a \in G\}$ \\\\
+\textbf{Class equation} sia G un gruppo finito con centro C. Allora
+$$|G| = |C| + \sum_{i=1}^k n_i$$
+dove $n_i$ sono i divisiori propri di $|G|$.
+\newpage
 \subsection{Legge di reciprocità quadratica}
 \textbf{Def.} di resto quadratico e simbolo di Legendre\\\\
 \textbf{Prop. di Eulero} $a^{\frac{p-1}{2}}\equiv (\frac{a}{p}) \mod p$\\
@@ -185,6 +193,8 @@ Oss sono ricnonducibili al caso più generale:\\\\
 \textbf{Prop} un divisore primo p di $F_k$ con $k>1$ soddsfa $p\equiv 1 \mod 2^{k+2}$
 \newpage
 \section{Anelli}
+\textbf{Thm} Sia R un anello non banale, con identità, senza 0-divisori e con caratteristica positiva $m$. Allora $m$ è un numero primo.\\\\
+\textbf{Corollario} Ogni campo finito ha caratteristica $p$ con $p$ primo.
 \subsection{The ring of integers}
 The rings of integers of number fields may be divided in several classes:\\
 - Quelli che non sono PID e quindi non sono domini Euclidei come $\mathbb{Q}[\sqrt{-5}]$\\
@@ -199,26 +209,6 @@ The norm-Euclidean quadratic fields have been fully classified, they are $\mathb
 \textbf{Prop.} un numero complesso è un intero algebrico sse il suo polinomio minimo su Q ha coefficienti interi.\\\\
 \textbf{Thm} se $D \equiv 2,3$ (mod 4) allora $\mathbb{Q}(\sqrt D) = \mathbb{Z}[\sqrt D]$\\
 se $D \equiv 1$ (mod 4) allora $\mathbb{Q}(\sqrt D) = \mathbb{Z}[\frac{1+ \sqrt D}{2}]$
-\subsection{Ideale}
-\textbf{Def.} sia A un anello,$I \subset A$ si dice \textbf{ideale} di A se\\
-1) I è sottogruppo di $(A,+,\times)$\\
-2) $x \in I$ e $a \in A$ allora $ax,xa \in I$\\\\
-\textbf{Def.} se un ideale è generato da un solo elemento diciamo che è principale\\\\
-\textbf{Oss.} Un ideale che sia contemporaneamente destro e sinistro si dice ideale \textbf{bilatero}. Nel caso particolare in cui A sia un anello commutativo le nozioni date coincidono e parliamo semplicemente di ideale.\\\\
-\textbf{Def.} un ideale si dice \textbf{proprio} se è un sottoinsieme proprio di A cioè non coincide con A.\\\\
-\textbf{Def.} Un ideale proprio è un ideale \textbf{massimale} se non è contenuto strettamente in nessun altro ideale proprio\\
-\textbf{Oss.} Gli ideali massimali sono pertanto caratterizzati dalla proprietà di essere contenuti solamente in due ideali: l'intero anello e l'ideale massimale stesso\\\\
-\textbf{Def.} un ideale proprio è detto ideale \textbf{primo} se $\forall ab \in I$ allora a o b appartengono a I.
-\textbf{Proprietà}
-L'anello quoziente $A/I$ è un dominio $\iff I$ è un ideale primo\\
-L'anello quoziente $A/I$ è un campo $\iff I$ è un ideale massimale
-\textbf{Operazioni sugli ideali}
-$I+J = \{a+b|a \in I, b \in J\}$\\
-$IJ = \{a_1b_1+..+a_n b_n| a_i \in I,b_i \in J,i=1,..,n$ per $n=1,2,..\}$\\
-Osservazioni: \\
-$IJ \subset I \cap J$\\ 
-$I \cup J \subset I+J$\\
-$I \cap J$ è ancora un ideale mentre $I \cup J$ non sempre
 \subsection{Domini}
 Un dominio è un anello commutativo con unità in cui vale la legge di annullamenteo del prodotto\\
 Su un dominio è definita una funzione Norma\\
@@ -242,7 +232,8 @@ Se questo vale si dice che R è \textit{norm-Euclidean}\\\\
 \textbf{Lemma:} la norma di un dominio euclideo è speciale\\
 \textbf{Oss.} in un dominio euclideo primo = irriducibile\\
 \textbf{Thm} ogni dominio euclideo è un PID\\
-\textbf{Thm} ogni dominio euclideo è un UFD
+\textbf{Thm} ogni dominio euclideo è un UFD\\\\
+\textbf{Prop} ogni dominio d'integrità con un numero finito di elementi è un campo.
 \subsection{PID}
 A si dice PID (Principal ideal domain) se è un dominio è ogni ideale di A è principale.\\
 \textbf{Thm} PID $\implies$ UFD\\\\
@@ -259,7 +250,61 @@ $$ (a_1) \subseteq (a_2) \subseteq ...$$
 2) $Z[X]$: l'ideale generato da (2,x) non è principale\\\\
 \textbf{Prop.} se D è un UFD $ \implies D[X]$ è un UFD
 \newpage
+\subsection{Ideale}
+\textbf{Def.} sia A un anello,$I \subset A$ si dice \textbf{ideale} di A se\\
+1) I è sottogruppo di $(A,+,\times)$\\
+2) $x \in I$ e $a \in A$ allora $ax,xa \in I$\\\\
+\textbf{Def.} se un ideale è generato da un solo elemento diciamo che è principale\\\\
+\textbf{Oss.} Un ideale che sia contemporaneamente destro e sinistro si dice ideale \textbf{bilatero}. Nel caso particolare in cui A sia un anello commutativo le nozioni date coincidono e parliamo semplicemente di ideale.\\\\
+\textbf{Def.} un ideale si dice \textbf{proprio} se è un sottoinsieme proprio di A cioè non coincide con A.\\\\
+\textbf{Def.} Un ideale proprio è un ideale \textbf{massimale} se non è contenuto strettamente in nessun altro ideale proprio\\
+\textbf{Oss.} Gli ideali massimali sono pertanto caratterizzati dalla proprietà di essere contenuti solamente in due ideali: l'intero anello e l'ideale massimale stesso\\\\
+\textbf{Def.} un ideale proprio è detto ideale \textbf{primo} se $\forall ab \in I$ allora a o b appartengono a I.\\\\
+\textbf{Proprietà}\\
+L'anello quoziente $A/I$ è un dominio $\iff I$ è un ideale primo\\
+L'anello quoziente $A/I$ è un campo $\iff I$ è un ideale massimale\\\\
+\textbf{Operazioni sugli ideali}\\
+$I+J = \{a+b|a \in I, b \in J\}$\\
+$IJ = \{a_1b_1+..+a_n b_n| a_i \in I,b_i \in J,i=1,..,n$ per $n=1,2,..\}$\\
+Osservazioni: \\
+$IJ \subset I \cap J$\\ 
+$I \cup J \subset I+J$\\
+$I \cap J$ è ancora un ideale mentre $I \cup J$ non sempre\\\\
+\textbf{Thm} sia R un anello commutativo con unità. Allora
+\begin{itemize}
+\item Un ideale $M$ di $R$ è un ideale massimale $\iff$ $R/M$ è un campo
+\item Un ideale $P$ di $R$ è un ideale primo $\iff R/P$ è un dominio d'integrità
+\item Ogni ideale massimale di $R$ è un ideale primo
+\item Se $R$ è un PID allora $R/(c)$ è un campo $\iff$ $c$ è un elemento primo di $R$ 
+\end{itemize}
+\newpage
 \section{Campi}
+\subsection{Estensioni di campi}
+\textbf{Def.} un campo che non contiene sottocampi propri è detto \emph{campo primo}\\
+\textbf{Thm} il sottocampo primo di un campo $F$ è isomorfo a $\mathbb{F}_p$ o $\mathbb{Q}$ a seconda che abbia caratteristica $p$ o 0.\\\\
+\textbf{Def.} sia $K$ un sottocampo di $F$ e $M$ un sottoinsieme di $F$. Allora il campo $K(M)$ è definito come l'intersezione di tutti i sottocampi di $F$ che contengono $M$ e $K$.\\\\
+\textbf{Def.} sia $K$ un sottocampo di $F$. Se $\theta$ è soluzione di un polinomio a coefficienti in $K$ allora si dice \emph{algebrica} su $K$. Un'estensione $L$ di $K$ dice algebrica su $K$ se ogni elemento di $L$ è algebrico su $K$.\\\\
+\textbf{Def} sia $\theta \in F$ algebrica su $K$, allora l'unico polinomio monico $g\in K[X]$ che genrea l'ideale $J = \{f \in K[X] | f(\theta) = 0\}$ è detto polinomio minimo.\\\\
+\textbf{Thm} sia $\theta \in F$ algebrica su $K$. Allora il polinomio minimo $g$ su $K$ soddisfa le proprietà seguenti:
+\begin{itemize}
+\item $G$ è irriducibile in $K[X]$
+\item sia $f \in K[X]$, se $f(\theta)=0$ allora $g|f$
+\item $g$ è il polinomio monico di grado minimo che ha $\theta$ come radice.
+\end{itemize}
+\textbf{Thm (forumla dei gradi)} sia $M$ un'estensione di $l$, $l$ un'estensione di $K$. Allora 
+$$ [M:K] = [M:L][L:K]$$
+\textbf{Thm} ogni estensione finita di K è algebrica su $K$.\\\\
+\textbf{Thm} sia $\theta \in f$ algebrica di grado $n$ su $K$ e sia $g$ il polinomio minimo di $\theta$ su $K$. Allora
+\begin{itemize}
+\item $K(\theta) \simeq K[x]/(g)$
+\item $[K(\theta):K]=n$ e $\{1,,\theta,..,\theta^{n-1}\}$ è una base di $K(\theta)$ su $K$.
+\item Ogni $\alpha \in K(\theta)$ è algebrico su $K$ e ha per grado un divisore di $n$.
+\end{itemize}
+\textbf{Thm} sia $f\in K[X]$ irriducibilesu $K$. Allora esiste un'estensione algebrica semplice di $K$ con una radice di $f$ come elemento che definisce.\\\\
+\textbf{Thm} sian $\alpha$ e $\beta$ due radici di $f \in K[X]$ irriducibile su $K$. Allora $K(\alpha) \simeq K(\beta)$.\\
+\textbf{Def} sia $f \in K[X]$ di grado positivo e $F$ estensione di $K$. $f$ \emph{si spezza} in $F$ se si può scrivere come prodotto di fattori lineari.\\\\
+\textbf{Thm (esistenza e unicità del campo di spezzamento)}\\
+sia $f \in K[X],K$ un campo. Allora esiste un campo di spezzamento di $f$ su $K$. Due campi di spezzamento di $f$ su $K$ sono fra loro isomorfi.
 \subsection{Norma e Traccia}
 \textbf{Def.} the (field) norm maps elements of a larger field into a subfield\\
 Sia $E/F$ un'estensione di Galois di grado finito, allora la norma e la traccia sono definite rispettivamente come
@@ -268,7 +313,7 @@ $$ Tr(\alpha) = \sum_{\sigma \in G} \sigma(\alpha)$$
 \textbf{Prop.} sia G = Gal(E/F), e $H = \{\sigma \in G | \sigma(\alpha) = \alpha\}$ lo stabilizzatore di $\alpha$ e\\ $f = x^m+a_{m-1}x^{m-1}+...+a_0$ sia il polinomio minimo di $\alpha$ su F.Allora:\\
 $$N(\alpha) = (-1)^{|G|}a_o^{|H|}$$
 $$Tr(\alpha) = - |H|a_{m-1}$$
-\subsection{Estensioni}
+\subsection{Teoria di Galois}
 Sia $E/F$ un'estensione algebrica\\\\
 \textbf{Estensione di Galois} sia $E^G := \{a \in E | \sigma(a) =a \forall \sigma \in G\} $ dove $G=Gal(E/F)$\\$E^G$ = F \\\\
 \textbf{Estensione normale} se ogni polinomio irriducibile in $F[X]$ che ha una radice in $E$ ha tutte le radici in $E$.\\\\
@@ -280,6 +325,13 @@ Sia $E/F$ un'estensione algebrica\\\\
 $F=F_1 \subset F_2 \subset ... \subset F_m = E$
 \newpage
 \section{Polinomi}
+\textbf{Thm} Sia $F$ un campo. Allora $F[X]$ è un PID.\\
+\textbf{Thm} sia $f \in F[X]$, allora $F[X]/(f)$ è un campo $\iff f$ è irriducibile su $F$.\\
+\textbf{Thm} $\alpha \in F$ è una radice di $f \iff (x-\alpha) | f$.\\
+\textbf{Thm} $\alpha \in F$ è una radice multipla $\iff$ è una radice sia di $f$ che di $f^{'}$.\\
+\textbf{Thm} $f\in F[X]$ di grado 2 o 3 è irriducibile $\iff$ non ha radici in $F$.\\\\
+\textbf{Thm (interpolazione di Lagrange)} per $n \ge 0$ siano $a_0,..,a_n$ elementi distinti di $F$ e $b_0,..,b_n$ elementi a piacere di $F$. Allora esiste un unico polinomio $f\in F[X]$ di grado $le n$ tale che $f(a_i)=b_i$. Questo polinomio è dato da
+$$ f(x) = \sum_{i=0}^n b_i \prod_{k=0, k \neq i}^n \frac{x-a_k}{a_i-a_k}$$
 \subsection{Definizioni}
 \textbf{Polinomio minimo:}\\
 $E \supset F, \alpha \in E,f \in F[X]$\\
@@ -292,7 +344,8 @@ Il polinomio minimo di $\zeta_n$ su $\mathbb{Q}$ dove $\zeta_n = e^{\frac{2\pi i
 $f\in \mathbb{Z}[X]$ si dice primitivo se il massimo comun divisiore di tutti i coefficienti è 1.\\\\
 \textbf{Polinomio caratteristico:}\\
 $p_A(x) := \det(A-xI_n)$\\
-dove A è una matrice quadrata di dimensione $n$ a coefficienti in un campo $\mathbb{K}$
+dove A è una matrice quadrata di dimensione $n$ a coefficienti in un campo $\mathbb{K}$\\\\
+\textbf{Polinomio simmetrico} se $f(x_{i_1},..,x_{i_n}) = f(x_1,..x_n)$ per ogni permutazione $(x_{i_1},..,x_{i_n})$ di $1,..,n$.
 \subsection{Proposizioni e teoremi}
 \textbf{Lemma di Gauss:} il prodotto di due polinomi primitivi è primitivo. \\
 \textbf{Corollario:} se un polinomio è irriducibile in $\mathbb{Z}[X]$ allora è irriducibile anche in $\mathbb{Q}[X]$\\\\

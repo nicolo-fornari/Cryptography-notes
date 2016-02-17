@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.1.11)  24 DEC 2015 12:45
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.1.11)  8 JAN 2016 16:11
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -544,270 +544,355 @@ Underfull \hbox (badness 10000) in paragraph at lines 124--141
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 142--154
+Underfull \hbox (badness 10000) in paragraph at lines 142--159
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 142--154
+Underfull \hbox (badness 10000) in paragraph at lines 142--159
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 142--154
+Underfull \hbox (badness 10000) in paragraph at lines 142--159
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 142--154
+Underfull \hbox (badness 10000) in paragraph at lines 142--159
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 142--154
+Underfull \hbox (badness 10000) in paragraph at lines 142--159
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 142--154
-
- []
-
-[5]
-Underfull \hbox (badness 10000) in paragraph at lines 155--160
+Underfull \hbox (badness 10000) in paragraph at lines 142--159
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 155--160
+Underfull \hbox (badness 10000) in paragraph at lines 142--159
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 160--162
+Underfull \hbox (badness 10000) in paragraph at lines 142--159
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 162--165
+Underfull \hbox (badness 10000) in paragraph at lines 142--159
+
+ []
+
+[5] [6]
+Underfull \hbox (badness 10000) in paragraph at lines 163--168
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 165--168
+Underfull \hbox (badness 10000) in paragraph at lines 163--168
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 170--175
+Underfull \hbox (badness 10000) in paragraph at lines 168--170
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 170--175
+Underfull \hbox (badness 10000) in paragraph at lines 170--173
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 170--175
-
- []
-
-[6]
-Underfull \hbox (badness 10000) in paragraph at lines 177--181
+Underfull \hbox (badness 10000) in paragraph at lines 173--176
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 183--186
+Underfull \hbox (badness 10000) in paragraph at lines 178--183
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 183--186
+Underfull \hbox (badness 10000) in paragraph at lines 178--183
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 178--183
 
  []
 
 [7]
-Underfull \hbox (badness 10000) in paragraph at lines 189--196
+Underfull \hbox (badness 10000) in paragraph at lines 185--189
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 197--202
+Underfull \hbox (badness 10000) in paragraph at lines 191--194
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 203--222
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 203--222
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 203--222
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 203--222
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 203--222
+Underfull \hbox (badness 10000) in paragraph at lines 191--194
 
  []
 
 [8]
-Underfull \hbox (badness 10000) in paragraph at lines 223--246
+Underfull \hbox (badness 10000) in paragraph at lines 196--198
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 223--246
+Underfull \hbox (badness 10000) in paragraph at lines 199--206
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 247--250
+Underfull \hbox (badness 10000) in paragraph at lines 207--212
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 247--250
+Underfull \hbox (badness 10000) in paragraph at lines 213--237
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 250--253
+Underfull \hbox (badness 10000) in paragraph at lines 213--237
 
  []
 
 
-Overfull \hbox (6.05614pt too wide) in paragraph at lines 254--261
+Underfull \hbox (badness 10000) in paragraph at lines 213--237
+
+ []
+
+[9]
+Underfull \hbox (badness 10000) in paragraph at lines 238--241
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 238--241
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 241--244
+
+ []
+
+
+Overfull \hbox (6.05614pt too wide) in paragraph at lines 245--252
 \OT1/cmr/m/n/10 2) i fat-tori ir-riducibili di due fat-tor-iz-zazioni sono gli 
 stessi con le stesse molteplicit^^Ra
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 254--261
+Underfull \hbox (badness 10000) in paragraph at lines 245--252
 
  []
 
-[9] [10]
-Underfull \hbox (badness 10000) in paragraph at lines 267--269
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 272--281
+[10]
+Underfull \hbox (badness 10000) in paragraph at lines 254--274
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 272--281
+Underfull \hbox (badness 10000) in paragraph at lines 254--274
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 272--281
+Underfull \hbox (badness 10000) in paragraph at lines 254--274
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 272--281
+Underfull \hbox (badness 10000) in paragraph at lines 254--274
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 272--281
+Underfull \hbox (badness 10000) in paragraph at lines 254--274
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 272--281
+Underfull \hbox (badness 10000) in paragraph at lines 254--274
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 272--281
+Underfull \hbox (badness 10000) in paragraph at lines 254--274
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 254--274
 
  []
 
 [11]
-Underfull \hbox (badness 10000) in paragraph at lines 284--296
+Underfull \hbox (badness 10000) in paragraph at lines 283--289
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 284--296
+Underfull \hbox (badness 10000) in paragraph at lines 283--289
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 284--296
+Underfull \hbox (badness 10000) in paragraph at lines 283--289
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 284--296
+Underfull \hbox (badness 10000) in paragraph at lines 283--289
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 284--296
+Underfull \hbox (badness 10000) in paragraph at lines 295--298
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 297--300
+Underfull \hbox (badness 10000) in paragraph at lines 303--308
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 303--308
 
  []
 
 [12]
-Underfull \hbox (badness 10000) in paragraph at lines 302--307
+Underfull \hbox (badness 10000) in paragraph at lines 312--314
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 302--307
+Underfull \hbox (badness 10000) in paragraph at lines 317--326
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 302--307
+Underfull \hbox (badness 10000) in paragraph at lines 317--326
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 302--307
+Underfull \hbox (badness 10000) in paragraph at lines 317--326
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 302--307
+Underfull \hbox (badness 10000) in paragraph at lines 317--326
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 308--310
+Underfull \hbox (badness 10000) in paragraph at lines 317--326
 
  []
 
-[13] (./algebra.aux) ) 
+
+Underfull \hbox (badness 10000) in paragraph at lines 317--326
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 317--326
+
+ []
+
+[13]
+Underfull \hbox (badness 10000) in paragraph at lines 328--334
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 336--349
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 336--349
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 336--349
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 336--349
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 336--349
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 336--349
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 350--353
+
+ []
+
+[14]
+Underfull \hbox (badness 10000) in paragraph at lines 355--360
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 355--360
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 355--360
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 355--360
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 355--360
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 361--363
+
+ []
+
+[15] (./algebra.aux) ) 
 Here is how much of TeX's memory you used:
- 1359 strings out of 495028
- 14733 string characters out of 6181497
+ 1360 strings out of 495028
+ 14747 string characters out of 6181497
  69231 words of memory out of 5000000
- 4588 multiletter control sequences out of 15000+600000
+ 4589 multiletter control sequences out of 15000+600000
  11550 words of font info for 45 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 27i,5n,24p,346b,116s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 27i,5n,24p,346b,121s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
 s/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
 mbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.
@@ -826,10 +911,10 @@ y5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
 share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/s
 hare/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/sh
 are/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
-Output written on algebra.pdf (13 pages, 228359 bytes).
+Output written on algebra.pdf (15 pages, 235768 bytes).
 PDF statistics:
- 123 PDF objects out of 1000 (max. 8388607)
- 88 compressed objects within 1 object stream
+ 129 PDF objects out of 1000 (max. 8388607)
+ 92 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
