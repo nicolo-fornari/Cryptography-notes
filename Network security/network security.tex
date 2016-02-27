@@ -6,6 +6,7 @@
 \usepackage{amssymb}
 \usepackage{geometry}
 \usepackage{graphicx}
+\usepackage{enumitem}
 \author{Nicolò Fornari}
 \title{Network security}
 \newtheorem{remark}{Remark}
@@ -218,5 +219,60 @@ It can be used to discover open ports on the network:
 \item OPEN $\to$ no answer
 \end{itemize}
 However it is possible to configure a stealth system that does not reply to UDP requests to CLOSED ports by dropping ICMP packets with a firewall or router.
-
+\chapter{Osi Session - Presentation - Application Layer}
+\section{DNS}
+DNS (Domain Name Service) is a hierarchical system for domain name resolving. It translates human readable addresses to IP addresses the domain is reachable at. It uses UDP for fast answer (port 53).\\
+\textbf{Motivation:} it is possible to assign multiple names to the same ip or viceversa. This flexibility is useful for:
+\begin{itemize}[noitemsep,nolistsep]
+\item Server substitution
+\item Virtual hosting (a single server hosting multiple websites)
+\item A name is assigned to multiple IPs (so that the workload is distributed).
+\end{itemize}
+There exists different kind of DNS records, here we lista few:
+\begin{itemize}[noitemsep,nolistsep]
+\item \textbf{A} correspondence name - IP(s)
+\item \textbf{AAAA} Same as A but works for ipv6
+\item \textbf{NS} ip of the DNS server to ask
+\end{itemize}
+\textbf{DNS hierarchy}
+\begin{itemize}[noitemsep,nolistsep]
+\item Root DNSs $\to$ they are responsible for top level domain queries
+\item Authoritative DNS $\to$ A DNS that "knows the answer" (ie. it does not ask to other DNSs)
+\item Recursive DNS $\to$ It forwards queries to authoritative DNSs
+\end{itemize}
+\subsection{DNS Cache poisoning}
+\includegraphics[scale=0.6]{dns-poisoning.png}
+\newpage
+\subsection{Kaminsky attack}
+The attacker rather than replacing an A record replaces an NS record, in this way he can get control over any (sub)domain.\\
+\includegraphics[scale=0.6]{kaminsky-attack.png}\\
+\textbf{Mitigation:} the source of attack is low entropy with a 16 bit ID. Randomness is not enough and it is not feasible to change the protocol to 32 bits. \\
+The solution is to randomize the source port to increase the entropy: any answer that does not match both source port and transaction ID will be dropped.
+\newpage
+\subsection{DNS amplification attack}
+It is DoS attack that exploits certain types of DNS answers that are much bigger in size than the requests.\\
+Recall that the DNS works over UDP so the source IP is easy to spoof.
+\subsection{DNS zone transfer}
+A sone is a domain for which a server is authoritative. "Slave" servers can ask "authoritative" servers to copy their zone database (over TCP).\\
+An attacker pretends to be a slave server and dump the zone DB. In this way he acquires knowledge of zone's infrastructure and it is eased in performing further attacks.
+\subsection{DNS Sec}
+It is a secure implementation of the DNS protocol: it implements DNS auth on top of normal DNS. Note that it protects just integrity and not confidentiality.
+\section{HTTP}
+HTTP is the main protocol on which the www works. It is based on the notion that a client can either reuest or submit data to a server. There are two methods: GET and POST.\\
+HTTP is stateless, HTTP cookies enable statefulness.
+\subsection{Cookies}
+\begin{itemize}
+\item Domain  (who can read)
+\item Expires (if NULL valid only for a session)
+\item Secure (only over SSL)
+\end{itemize}
+\textbf{HTTP session hijacking} the attacker can read the session ID cookie and spoof the victim's identity (eg. facebook until 2011).\\
+Secure cookies provide confidentiality but no integrity.
+\section{Telnet}
+It is a protocol used in remote control services. It operates over TCP port 23. Typically there is no authentication and no encryption.
+\section{Common issues}
+\begin{itemize}
+\item Lack of authentication
+\item Communication channel is in the clear
+\end{itemize}
 \end{document}
