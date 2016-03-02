@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.12.4)  23 FEB 2016 14:43
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.12.4)  2 MAR 2016 11:47
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -380,23 +380,31 @@ Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 \Gin@req@height=\dimen120
 \Gin@req@width=\dimen121
 )
-\c@remark=\count104
+(/usr/share/texlive/texmf-dist/tex/latex/enumitem/enumitem.sty
+Package: enumitem 2011/09/28 v3.5.2 Customized lists
+\labelindent=\skip49
+\enit@outerparindent=\dimen122
+\enit@toks=\toks29
+\enit@inbox=\box28
+\enitdp@description=\count104
+)
+\c@remark=\count105
 
 (./network security.aux)
 \openout1 = `"network security.aux"'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -434,17 +442,17 @@ LaTeX Font Info:    ... okay on input line 12.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count105
-\scratchdimen=\dimen122
-\scratchbox=\box28
-\nofMPsegments=\count106
-\nofMParguments=\count107
-\everyMPshowfont=\toks29
-\MPscratchCnt=\count108
-\MPscratchDim=\dimen123
-\MPnumerator=\count109
-\makeMPintoPDFobject=\count110
-\everyMPtoPDFconversion=\toks30
+\scratchcounter=\count106
+\scratchdimen=\dimen123
+\scratchbox=\box29
+\nofMPsegments=\count107
+\nofMParguments=\count108
+\everyMPshowfont=\toks30
+\MPscratchCnt=\count109
+\MPscratchDim=\dimen124
+\MPnumerator=\count110
+\makeMPintoPDFobject=\count111
+\everyMPtoPDFconversion=\toks31
 ) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
 )
@@ -489,12 +497,12 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-LaTeX Font Info:    Try loading font information for U+msa on input line 13.
+LaTeX Font Info:    Try loading font information for U+msa on input line 14.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 13.
+LaTeX Font Info:    Try loading font information for U+msb on input line 14.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -506,65 +514,65 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ]
 Chapter 1.
 
-Underfull \hbox (badness 10000) in paragraph at lines 16--24
+Underfull \hbox (badness 10000) in paragraph at lines 17--25
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 16--24
+Underfull \hbox (badness 10000) in paragraph at lines 17--25
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 16--24
+Underfull \hbox (badness 10000) in paragraph at lines 17--25
 
  []
 
 [3]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 29.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 30.
  (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 29.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 30.
 
 <arp.png, id=17, 627.34375pt x 406.51875pt>
 File: arp.png Graphic file (type png)
  <use arp.png>
-Package pdftex.def Info: arp.png used on input line 36.
+Package pdftex.def Info: arp.png used on input line 37.
 (pdftex.def)             Requested size: 376.40915pt x 243.91312pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 35--41
+Underfull \hbox (badness 10000) in paragraph at lines 36--42
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 35--41
+Underfull \hbox (badness 10000) in paragraph at lines 36--42
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 35--41
+Underfull \hbox (badness 10000) in paragraph at lines 36--42
 
  []
 
 [4 <./arp.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 42--49
+Underfull \hbox (badness 10000) in paragraph at lines 43--51
 
  []
 
 [5] <ip.png, id=29, 602.25pt x 264.99pt>
 File: ip.png Graphic file (type png)
  <use ip.png>
-Package pdftex.def Info: ip.png used on input line 61.
+Package pdftex.def Info: ip.png used on input line 62.
 (pdftex.def)             Requested size: 301.12425pt x 132.49467pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 68--74
+Underfull \hbox (badness 10000) in paragraph at lines 69--76
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 68--74
+Underfull \hbox (badness 10000) in paragraph at lines 69--76
 
  []
 
@@ -572,15 +580,15 @@ Underfull \hbox (badness 10000) in paragraph at lines 68--74
 File: fragmentation.png Graphic file (type png)
 
 <use fragmentation.png>
-Package pdftex.def Info: fragmentation.png used on input line 86.
+Package pdftex.def Info: fragmentation.png used on input line 87.
 (pdftex.def)             Requested size: 358.3415pt x 212.59589pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 85--87
+Underfull \hbox (badness 10000) in paragraph at lines 86--88
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 85--87
+Underfull \hbox (badness 10000) in paragraph at lines 86--88
 
  []
 
@@ -588,28 +596,28 @@ Underfull \hbox (badness 10000) in paragraph at lines 85--87
 File: icmp.png Graphic file (type png)
 
 <use icmp.png>
-Package pdftex.def Info: icmp.png used on input line 93.
+Package pdftex.def Info: icmp.png used on input line 94.
 (pdftex.def)             Requested size: 413.66966pt x 103.4174pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 92--95
+Underfull \hbox (badness 10000) in paragraph at lines 93--97
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 92--95
+Underfull \hbox (badness 10000) in paragraph at lines 93--97
 
  []
 
 <traceroute.png, id=42, 689.57625pt x 496.85625pt>
 File: traceroute.png Graphic file (type png)
  <use traceroute.png>
-Package pdftex.def Info: traceroute.png used on input line 117.
+Package pdftex.def Info: traceroute.png used on input line 118.
 (pdftex.def)             Requested size: 344.78728pt x 248.4275pt.
 
 Underfull \vbox (badness 1147) has occurred while \output is active []
 
  [8 <./icmp.png>] [9 <./traceroute.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 120--122
+Underfull \hbox (badness 10000) in paragraph at lines 121--124
 
  []
 
@@ -618,15 +626,15 @@ Chapter 2.
 <tcp-header.png, id=52, 417.81094pt x 182.93344pt>
 File: tcp-header.png Graphic file (type png)
  <use tcp-header.png>
-Package pdftex.def Info: tcp-header.png used on input line 130.
+Package pdftex.def Info: tcp-header.png used on input line 131.
 (pdftex.def)             Requested size: 334.2492pt x 146.34694pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 140--142
+Underfull \hbox (badness 10000) in paragraph at lines 141--143
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 140--142
+Underfull \hbox (badness 10000) in paragraph at lines 141--143
 
  []
 
@@ -636,87 +644,131 @@ Underfull \hbox (badness 10000) in paragraph at lines 140--142
 File: 3-way.png Graphic file (type png)
 
 <use 3-way.png>
-Package pdftex.def Info: 3-way.png used on input line 144.
+Package pdftex.def Info: 3-way.png used on input line 145.
 (pdftex.def)             Requested size: 304.13551pt x 233.37129pt.
  <4-way.png, id=57, 626.34pt x 483.8075pt>
 File: 4-way.png Graphic file (type png)
  <use 4-way.png>
-Package pdftex.def Info: 4-way.png used on input line 145.
+Package pdftex.def Info: 4-way.png used on input line 146.
 (pdftex.def)             Requested size: 313.16922pt x 241.90315pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 144--146
+Underfull \hbox (badness 10000) in paragraph at lines 145--147
 
  []
 
 [12 <./3-way.png> <./4-way.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 148--152
+Underfull \hbox (badness 10000) in paragraph at lines 149--154
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 158--161
+Underfull \hbox (badness 10000) in paragraph at lines 159--162
 
  []
 
 [13]
-Underfull \hbox (badness 10000) in paragraph at lines 175--180
+Underfull \hbox (badness 10000) in paragraph at lines 176--182
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 175--180
+Underfull \hbox (badness 10000) in paragraph at lines 176--182
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 175--180
+Underfull \hbox (badness 10000) in paragraph at lines 176--182
 
  []
 
 [14]
-Underfull \hbox (badness 10000) in paragraph at lines 187--189
+Underfull \hbox (badness 10000) in paragraph at lines 188--191
 
  []
 
 <mitnick-attack.png, id=69, 736.7525pt x 434.62375pt>
 File: mitnick-attack.png Graphic file (type png)
  <use mitnick-attack.png>
-Package pdftex.def Info: mitnick-attack.png used on input line 197.
+Package pdftex.def Info: mitnick-attack.png used on input line 198.
 (pdftex.def)             Requested size: 442.05492pt x 260.77626pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 196--198
+Underfull \hbox (badness 10000) in paragraph at lines 197--199
 
  []
 
 
-Overfull \hbox (23.80124pt too wide) in paragraph at lines 196--198
+Overfull \hbox (23.80124pt too wide) in paragraph at lines 197--199
 [] 
  []
 
-[15 <./mitnick-attack.png>] [16] (./network security.aux) ) 
+[15 <./mitnick-attack.png>] [16]
+Chapter 3.
+<dns-poisoning.png, id=76, 782.925pt x 518.93875pt>
+File: dns-poisoning.png Graphic file (type png)
+ <use dns-poisoning.png>
+Package pdftex.def Info: dns-poisoning.png used on input line 244.
+(pdftex.def)             Requested size: 469.75862pt x 311.36565pt.
+
+Overfull \hbox (51.50494pt too wide) in paragraph at lines 244--245
+[] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [17
+
+]
+[18 <./dns-poisoning.png>]
+<kaminsky-attack.png, id=83, 814.04124pt x 568.1225pt>
+File: kaminsky-attack.png Graphic file (type png)
+
+<use kaminsky-attack.png>
+Package pdftex.def Info: kaminsky-attack.png used on input line 248.
+(pdftex.def)             Requested size: 488.42851pt x 340.87611pt.
+
+Overfull \hbox (70.17484pt too wide) in paragraph at lines 247--251
+[] 
+ []
+
+[19 <./kaminsky-attack.png>] [20]
+Chapter 4.
+[21
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 311--312
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 329--332
+
+ []
+
+[22] (./network security.aux) ) 
 Here is how much of TeX's memory you used:
- 3232 strings out of 495028
- 42318 string characters out of 6181497
- 105162 words of memory out of 5000000
- 6371 multiletter control sequences out of 15000+600000
- 13167 words of font info for 50 fonts, out of 8000000 for 9000
+ 3524 strings out of 495028
+ 47340 string characters out of 6181497
+ 111277 words of memory out of 5000000
+ 6657 multiletter control sequences out of 15000+600000
+ 13474 words of font info for 51 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 37i,7n,24p,333b,191s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmbxti10.pfb></usr/share/texlive/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pf
-b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on "network security.pdf" (16 pages, 494985 bytes).
+ 37i,7n,24p,333b,234s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmbxti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+mi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pf
+b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/
+texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/share/texlive/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on "network security.pdf" (22 pages, 664425 bytes).
 PDF statistics:
- 112 PDF objects out of 1000 (max. 8388607)
- 71 compressed objects within 1 object stream
+ 133 PDF objects out of 1000 (max. 8388607)
+ 84 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 46 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 56 words of extra memory for PDF output out of 10000 (max. 10000000)
 

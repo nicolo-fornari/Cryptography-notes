@@ -275,4 +275,66 @@ It is a protocol used in remote control services. It operates over TCP port 23. 
 \item Lack of authentication
 \item Communication channel is in the clear
 \end{itemize}
+\chapter{Vulnerabilities}
+\textbf{Software bug} a bug is a problem in the execution of the software that leads to unexpected behaviour (eg. crashes,infinite loops, wrong entries of db displayed)\\
+Charachteristics of a bug
+\begin{itemize}
+\item Replicability
+\item Logic/configuration/design/implementation
+\item Fix priority
+\item If it is documented it is a feature
+\end{itemize}
+\section{Types of vulnerabilities}
+\begin{itemize}
+\item Configuration v.\\
+eg. Ssh accepts root connections from any ip
+\item Insfrastructural v.\\
+eg. sensitive db in a network's DMZ
+\item Software v.\\
+eg. authorization mechanism can be bypassed
+\end{itemize}
+\section{Vulnerability discovery}
+Vulnerabilities are different in nature
+\begin{itemize}
+\item Often implementation dependent
+\item May require deep understanding of sw module interaction
+\item Necessary in-depth knowledge of system design (kernel structure, memory allocation)
+\end{itemize}
+Discovery techniques
+\begin{itemize}
+\item Code lookups (searches for known patterns)\\
+either you are a developer or the software is open source
+\item Fuzzing (semi-automatic random input generation)
+\item Google hacking (outdated)\\
+you look for software that you already know it is vulnerable
+\end{itemize}
+Vulnerabilites can be found either internally or externally to a company.\\
+\section{Vulnerability handling}
+The ISO 30111 is a standard to handle vulnerabilities.\\
+\textbf{The initial investigation}
+\begin{itemize}
+\item The reported problem is a security vulnerability
+\item The vulnerability affects a supported version of the software the vendors maintains, not third parties modules (else: exit).
+\item The vulnerability is eploitable with know techniwues (else: exit)
+\item Root cause analysis
+\item Prioritisation (evaluate potential threat)
+\end{itemize}
+\textbf{Resolution decision}\\
+Vendor must decide how to resolve the vulnerability.
+\begin{itemize}
+\item Configuration v. $\to$ advisory may be enough
+\item Code v. $\to$ patch
+\item Critical v. $\to$ release a mitigation before full patch
+\end{itemize}
+\textbf{Remediation development}\\
+Every solution must be tested before being delivered. This is very expensive both for customer and vendor\\\\
+\textbf{Release and Post-Release}\\
+\section{Different issues}
+Vulnerability advisories are typically published after pathcing.\\
+Security researchers expect economic return and or credit.\\
+Issue: communication between security researcher and the vendor: tradeoff between saying little and being verbose.\\
+Often involves development of Proof of concept exploit to show the vulnerability is exploitable.
+
+
+
 \end{document}

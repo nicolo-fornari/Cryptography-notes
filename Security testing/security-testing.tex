@@ -1,4 +1,4 @@
-\documentclass[10pt,a4paper]{article}
+\documentclass[10pt,a4paper]{book}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -8,9 +8,9 @@
 \title{Security testing}
 \definecolor{mygray}{gray}{0.9}
 \begin{document}
-\maketitle
-\section{Buffer Overflow}
-\subsection{Stack and Heap}
+%\maketitle
+\chapter{Buffer Overflow}
+\section{Stack and Heap}
 The \emph{stack} is the memory set aside as scratch space for a thread of execution. When a function is called, a block is reserved on the top of the stack for local variables and some book keeping data. When that function returns, the block becomes unused and can be used the next time a function is called. The stack is always reserved in a LIFO (last in first out) order; the most recently reserved block is always the next block to be freed. This makes it really simple to keep track of the stack; freeing a block from the stack is nothing more than adjusting one pointer.\\\\
 The \emph{heap} is memory set aside for dynamic allocation. Unlike the stack, there's no enforced pattern to the allocation and deallocation of blocks from the heap; you can allocate a block at any time and free it at any time. This makes it much more complex to keep track of which parts of the heap are allocated or free at any given time; there are many custom heap allocators available to tune heap performance for different usage patterns.\\\\
 Each thread gets a stack, while there's typically only one heap for the application (although it isn't uncommon to have multiple heaps for different types of allocation).\\\\
@@ -18,17 +18,102 @@ The OS allocates the stack for each system-level thread when the thread is creat
 \textbf{Scope:} the stack is attached to a thread, so when the thread exits the stack is reclaimed. The heap is typically allocated at application startup by the runtime, and is reclaimed when the application (technically process) exits.\\\\
 \textbf{Size:} the size of the stack is set when a thread is created. The size of the heap is set on application startup, but can grow as space is needed (the allocator requests more memory from the operating system).\\\\
 \textbf{Speed:} the stack is faster because the access pattern makes it trivial to allocate and deallocate memory from it (a pointer/integer is simply incremented or decremented), while the heap has much more complex bookkeeping involved in an allocation or free. Also, each byte in the stack tends to be reused very frequently which means it tends to be mapped to the processor's cache, making it very fast. Another performance hit for the heap is that the heap, being mostly a global resource, typically has to be multi-threading safe, i.e. each allocation and deallocation needs to be - typically - synchronized with "all" other heap accesses in the program.
-\subsection{Stack smashing}
+\section{Call stack}
+\textbf{EBP:} it is a register pointing to the highest address of the current invocation frame\\
+\textbf{ESP:} it is a register pointing to the top of the stack (lowest address)\\
+\textbf{EIP:} it is a register pointing to the instruction to be executed.
+
+\section{Stack smashing}
 The canonical method for exploiting a stack based buffer overflow is to overwrite the function return address with a pointer to attacker-controlled data (usually on the stack itself).\\\\
-\subsection{Fixing buffer overflow}
+\section{Fixing buffer overflow}
 \begin{itemize}
 \item Used counted versions of string functions (less performance but there is a boundary check)
 \item Use safe string libraries, if available, or C++ strings\\
-- fgets instead of gets
+- fgets instead of gets\\
 - snprintf instead of printf
 \item Check loop termination and array boundaries
 \item Use C++/STL containers instead of C arrays
+\end{itemize}
+\subsection{Non executable stack}
+The OS kernel can be patched so as to forbid the execution of instructions whose address is on the stack.
+\begin{itemize}
+\item functions trampolines are addede to the stack by gcc for nested functions
+\item signals handlers are allocated on the user stack by Linux
+\item dynamically generated code bmay reside on the stack
+\end{itemize}
+\subsection{Canary words}
+Canaries or canary words are known values that are placed between a buffer and control data on the stack to monitor buffer overflows. When the buffer overflows, the first data to be corrupted will usually be the canary, and a failed verification of the canary data is therefore an alert of an overflow, which can then be handled, for example, by invalidating the corrupted data.
+\chapter{Injecton}
+\section{SQL injection}
+\textbf{Problem.} user provided data is used to form an SQL query (eg. through string concatenation) and the attacker provides malformed data aimed at changing the semantics of the query.\\
+\textbf{Controls:} regular expressions, prepared statements, grant access to table only through stored procedures
+\section{Command injection}
+\textbf{Problem.} untrusted user data include commands as interpreter understands, forcing the interpreter to operate beyond its intended functions.\\
+\textbf{Controls:}
+\begin{itemize}
+\item Deny-list: user data including characters ina deny list are rejected
+\item Allow-list: only user data matching the character patterns in the allow list are interpreted
+\item Quoting: user data transformed (eg. embedded with quotes) to avoid being interpreted as commands
+\end{itemize}
+\section{Error handling}
+Example: the attacker provides an invalid file name hence a null pointer is used to perform file operations causing either DoS or disclosure of program and system's internals.\\
+\textbf{Controls:}
+\begin{itemize}
+\item Handle error exceptions in the code
+\item Never mask exceptions that may corrupt the program's state
+\item Check function return values for errors
+\end{itemize}
+\section{XSS}
+\textbf{Problem.} user input is directly displayed in an output webpage without any sanitization. the typical attack pattern is:
+\begin{enumerate}
+\item Identify a vulnerable website
+\item Create a URL that submits malicious input
+\item Social engineering to induce the victim to click on the URL
+\item Victim clicks
+\end{enumerate}
+\textbf{Controls:} HTML encoding, sanitize user input
+\chapter{Network}
+\section{SSL and TLS}
+\textbf{Problems:}
+\begin{itemize}
+\item The certificate authority signing the certificate is not validated
+\item The signature of the certification authority is not validated for integrity
+\item The time validity of the certificate is not checked
+\item The certificate is not checked against the certificate revocation list.
+\end{itemize}
+While authentication checks are mandatory in the https protocol, if programmers use low level SSL/TLS libraries directly they might forget some important authentication check.
+\section{Weak passwords}
+\textbf{Problems:}
+\begin{itemize}
+\item Initial passsword is weak
+\item Long passwords are not allowed
+\item Short password are allowed
+\item Dictionary passwords accepted
+\item Alphanumeric-only passwords accepted
+\item No checks on number of login attempts
+\item User is locked out when too many login attempts are made (DoS)
+\item user is not requested to change password periodically
+\item Previous passwords are allowed when user changes password
+\item No secure channel/protocol is used
+\item Change passwords are not reauthenticated
+\item Passwords can be reset upon end user request based on weak information
+\item Reset passwords are specified by the user rather than being delivered securely
+\item Default password change is not enforced on first login
+\item Passwords are stored in clear
+\item Login failure messages and response time reveal sensitive information
+\item Upon login failure wrong passwords are logged
+\end{itemize}
+\textbf{Controls:}
+\begin{itemize}
+\item Use PBKDF2 to hash passwords
+\item Iterate password hashing to increase response time
+\item Raise barriers to password reset (questions, secure delivery,extra authentication)
+\item Instead of locking out users let them retry after some time has passed
+\item Increase the response time when login failures occur
+\item Blacklist IP addresses (and alert the user) if too many login attempts occur
+\item Multifactor authentication: password + token
 
 \end{itemize}
+
 
 \end{document}
