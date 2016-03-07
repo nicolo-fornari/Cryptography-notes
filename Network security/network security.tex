@@ -28,10 +28,10 @@ ARP (address resolution protocol) allows systems to associate an ip address to a
 All addresses in the ARP table are added by one of these mechanisms:
 \begin{itemize}
 \item ARP request-reply: \\
-who	is	192.168.0.16 tell 192.168.0.1\\
-192.168.0.16	is	at	00-10-BC-2c-11-56
+who is 192.168.0.16 tell 192.168.0.1\\
+192.168.0.16 is at 00-10-BC-2c-11-56
 \item Gratuitous ARP\\
-192.168.0.16	is	at	00-10-BC-2c-11-56
+192.168.0.16 is at 00-10-BC-2c-11-56
 \end{itemize}
 \textbf{ARP frame header}\\\\
 \includegraphics[scale=0.6]{arp.png}\\
@@ -94,25 +94,25 @@ You keep sending fragments without sending the first fragment, the router keeps 
 \includegraphics[scale=0.9]{icmp.png}\\\\
 \textbf{Some message types}
 \begin{itemize}
-\item 0		Echo Reply
-\item 3		Destination	Unreachable\\
+\item 0  Echo Reply
+\item 3  Destination Unreachable\\
 Code 0 $\to$ Net unreachable\\
 Code 1 $\to$ Host unreachable\\
 Code 2 $\to$ Protocol unreachable\\
 Code 3 $\to$ Port unreachable\\
 Code 4 $\to$ Fragmentation needed and DF set\\
 Code 5 $\to$ Source route failed
-\item 4		Source	Quench
-\item 5		Redirect
-\item 8		Echo
-\item 11		Time Exceeded\\
+\item 4  Source Quench
+\item 5  Redirect
+\item 8  Echo
+\item 11  Time Exceeded\\
 Code 0 $\to$ Net unreachable\\
 Code 1 $\to$ Host unreachable
-\item 12		Parameter Problem
-\item 13		Timestamp
-\item 14		Timestamp Reply
-\item 15		Information	Request
-\item 16		Information	Reply
+\item 12  Parameter Problem
+\item 13  Timestamp
+\item 14  Timestamp Reply
+\item 15  Information Request
+\item 16  Information Reply
 \end{itemize}
 \section{Traceroute}
 \includegraphics[scale=0.5]{traceroute.png}
@@ -334,7 +334,51 @@ Vulnerability advisories are typically published after pathcing.\\
 Security researchers expect economic return and or credit.\\
 Issue: communication between security researcher and the vendor: tradeoff between saying little and being verbose.\\
 Often involves development of Proof of concept exploit to show the vulnerability is exploitable.
-
-
+\section{Social Engineering}
+\textit{The biggest threat to the security of a company is 
+not a computer virus, an unpatched hole in a key 
+program or a badly installed firewall. In fact, the 
+biggest threat could be you. What I found personally 
+to be true was that it's easier to manipulate  people 
+rather than technology. Most of the time 
+organisations overlook that human element}\\
+Kevin Mitnick\\\\
+Social engineering identifies a set of techniques that attack weaknesses in human psychology.\\
+Situational theory of publics: why people take action, or feel part of a collective
+\begin{itemize}
+\item Problem recognition $\to$ subject thinks the problem is relevant to them
+\item Active involvement $\to$ subject thinks he will suffer the consequences of the threat
+\item Constraint recognition $\to$ subject thinks his actions are limited by factors outside of their control
+\end{itemize}
+\subsection{ELM - Elaboration Likelihood Model}
+ELM describes the ways humans change their attitudes or decide to perform actions they would not perform without external "stimuli".\\
+Two routes to persuasions:
+\begin{itemize}
+\item Central route\\
+Stimuli are weighted by the subject and the final decision is carefully elaborated. Persuasions happens through careful elaboration of information
+\item Peripheral route\\
+Subject is convinced by under analyzing apparently relevant clues that are in reality unrelated to the subject matter. Examples of adjunct elements of the communication: likeability of subject,attractiveness,trust,etc.
+\end{itemize}
+\begin{remark}
+Social engineering differs from marketing in that attackers typically do not try to sell products. Rather social engineers must persuade victims to disclose sensitive or private network.
+\end{remark}
+\subsection{Hacking a human}
+\begin{itemize}
+\item \textbf{Reciprocation}\\
+Normative Commitment: subject will perform an action because it is customary or mandated by law or contract. It is based on the notion of reciprocation of benefits. When subject receives something he values he feels \emph{cognitive dissonance} (eg. sun cream free tester example). People tend to comply because they feel gratitude for the unsolicited proposal.
+\item \textbf{Consistency}\\
+Continuance commitment: subject keeps doing a determined actio even if it is clearly bad (eg. lottery, keep spending money, eventually it will work).\\
+Upfront costs are low wrt promised benefit.
+\item \textbf{Social proof}\\
+Affective commitment: people are influenced by the opinion of those they esteem or like. Example: pretend you are on a vacation with a friend of the victim and ask money to solve an emergency
+\item \textbf{Likeability}\\
+If you like somebody you will trust him and viceversa\\
+Example: actors in advertisment
+\item \textbf{Authority}\\
+Subjects fear punishment and will comply\\
+Example: Milgram's experiment with electric shocks
+\item \textbf{Scarcity}\\
+Subject think freedom of choice is a function of time: similarly to fear scarcity leads people to take quick potentially uninformed decisions in fear of losing an opprtunity that will disappear in time or scarce in quantity. 
+\end{itemize}
 
 \end{document}
