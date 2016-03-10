@@ -112,8 +112,70 @@ While authentication checks are mandatory in the https protocol, if programmers 
 \item Increase the response time when login failures occur
 \item Blacklist IP addresses (and alert the user) if too many login attempts occur
 \item Multifactor authentication: password + token
-
 \end{itemize}
-
+\section{DNS}
+Scenario example: application performs automated software update connecting to a server. Solution: rely on SSL.
+\section{Unauthenticated keys}
+Problem. Key exchange alone is not secure. Use well tested solutions for authentication and key exchange.
+\chapter{Other}
+\section{Data storage}
+Wrong read/write permissions (eg. world writable)
+\begin{itemize}
+\item Executable
+\item Configuration files
+\item DB files
+\end{itemize}
+Sensitive data is hardcoded: an attacker having access to it can easily perform reverse engineering.\\
+Example: /home/apache/config instead of www/html\\
+Remark: scrub the memory once secret data is no longer needed.
+\section{Information leakage}
+\begin{itemize}
+\item \textbf{Time:} time measures can leak information (eg. first letter of password right/wrong)
+\item \textbf{Error messages:} user name correctness,version information, network addresses,reason for failure, path information
+\item \textbf{Stack information:} reported to the user when a function is called with less parameters than expected
+\end{itemize}
+\section{Access}
+\begin{itemize}
+\item Race conditions
+Problem. The same files are accessed by different applications. Since the file is accessed by name and not by \emph{handle} it is not locked!
+\item Fake files
+If the attacker provides a device name the process remains stuck until the device times out (DoS)
+\item traversal
+\end{itemize}
+Controls:
+\begin{itemize}
+\item Never use a file name for more than one operation. Use a file handle instead
+\item Keep applications files in a safe directory
+\item Resolve the path before validating
+\item Lock files explicitly when first accessed
+\item If a file has zero size truncate it to avoid replacement
+\item Check if a file happens to be a device,symbolic link or a pièe
+\end{itemize}
+\section{Race conditions}
+The application is crashed by concurrent code that is allowed to access data not protected through mutual exclusion.
+\begin{itemize}
+\item Time of check (TOC) and Time of use (TOU) should be within a protected time interval.
+\item Use locks/mutual exclusion (synchronized)
+\item Write reentrant code
+\item Use private stores for temporary files and directories
+\end{itemize}
+\section{Random numbers}
+\begin{itemize}
+\item PRNG: used for statistical simulation, given the seed the sequence is totally predictable
+\item CRNG (Cryptographic pseduo random number generator): the seed is unguessable
+\item TRNG (True prng): eg. timestamps of unpredictable events (eg. mouse movements), still they are used just as seeds since they may contain some statistical bias
+\end{itemize}
+\section{Usability}
+Security information is communicated, collected or made modifiable through an interface having quite poor usability.\\
+Problem. user select the easy (usually unsecure) answer, without paying attention.\\
+Controls:
+\begin{itemize}
+\item Make security decisions for users whenever possible
+\item Treat certification problems as server being inaccessible
+\item Adopt progressive disclosure
+\item Clearly indicate consequences
+\item State password requirements explicitly
+\item Hide dangerous security options in deeply nested menus
+\end{itemize}
 
 \end{document}

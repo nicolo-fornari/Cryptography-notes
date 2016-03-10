@@ -380,5 +380,74 @@ Example: Milgram's experiment with electric shocks
 \item \textbf{Scarcity}\\
 Subject think freedom of choice is a function of time: similarly to fear scarcity leads people to take quick potentially uninformed decisions in fear of losing an opprtunity that will disappear in time or scarce in quantity. 
 \end{itemize}
-
+\chapter{CVSS}
+Why to grade vulnerability?\\
+Vulnerability counting can not be a measure of severity. Vulnerabilities are not the same (eg. XSS vs BoF).\\
+Clients and user should be informed too: security researcher $\to$ vendor $\to$ user. A standard is needed.\\\\
+CVSS is an open framework for communication the characteristics and severity of sw vulnerability.\\
+The goal is different users score the same vulnerability in the same way $\to$ severity assessment and different people read the same vulnerability in the same way $\to$ severity communication.\\
+\begin{remark}
+CVSS v2 and v3 are different
+\end{remark}
+CVSS v3 has three metrics:
+\begin{itemize}
+\item \textbf{Base metric}\\
+Exploitability metrics: attack vector, attack complexity, privilegs required, user interaction\\
+Scope metric (where is the vulnerability and wrt whom is affected)\\
+Impact metrics (CIA)
+\item \textbf{Temporal metric}\\
+Exploitability, remediation level,report confidence
+\item \textbf{Environmental metric}\\
+CIA requirements,mitigated base metrics
+\end{itemize}
+\textbf{Example:} think of ssh open to the wild or available just in the LAN, the environmental metrics measures this difference.
+\section{Attack vector}
+The more remote an attacker can be from the target the greater the vunlerability score. Possible values
+\begin{itemize}
+\item Network
+\item Adjacent network: same subnet
+\item Local: the attack needs to be locally on the system (log-in locally or rely user interaction, eg. virus by email)
+\item Physical
+\end{itemize}
+\section{Attack complexity}
+This metrics describes the conditions beyond the attacker's control that must exist in order to exploit the vulnerability. Possible values:
+\begin{itemize}
+\item High: there is a grade of stochasticity meaning that the  attack will not work with probability 1 eg. hash collision
+\item Low: specialized access conditions do not exist
+\end{itemize}
+\textbf{Examples:}
+\begin{itemize}
+\item Target specific reconnaisance (configuration settings, sequence numbers, shared secrets etc.)\\
+eg. ssh listening on default port 22
+\item Target environment: repeat exploitation to win a race condition
+\item the attacker injects himself into logical network path\\
+eg. the routing of packets is not in control of the attacker
+\end{itemize}
+\section{Privileges required}
+Possible values:
+\begin{itemize}
+\item High $\to$ admin privileges
+\item Low $\to$ guest, any account is going to work
+\item None
+\end{itemize}
+\section{Scope}
+Scope refers to the collection of privileges defined by a computer authority (eg. an application,an operating system, a sandbox environment etc.)
+\section{Summary}
+\begin{tabular}{|c|c|c|c|c|}
+\hline 
+\textbf{Field} & \textbf{Value}\\
+\hline
+Access Vector & Network & Adjacent network & Local & Physical \\ 
+\hline 
+Access complexity & High & Low \\ 
+\hline 
+Privileges required & High & Low & None & - \\ 
+\hline 
+User interaction & Required & None & - & - \\ 
+\hline 
+Scope & Unchanged  & Changed & - & - \\ 
+\hline 
+Impact & High & Low & None & - \\ 
+\hline 
+\end{tabular} 
 \end{document}
