@@ -450,4 +450,82 @@ Scope & Unchanged  & Changed & - & - \\
 Impact & High & Low & None & - \\ 
 \hline 
 \end{tabular} 
+\chapter{Malware}
+\textbf{Def} a software that urn without consciousness of user and or system.\\
+Two different kinds: program that need a host program to operate and self-independent ones. Moreover a malware can self replicate or not.
+\textbf{Taxonomy}
+\begin{itemize}
+\item Virus $\to$ modifies legitimate software
+\item Worm $\to$ self-replicates
+\item Trojan horse $\to$ allows remote control of machine
+\item Keyloggers $\to$ send typed info to attacker
+\item Rootkit $\to$ hook to libraries or system files
+\item Zombie,bot $\to$ remote coordinated control of multiple machines
+\end{itemize}
+\section{Virus}
+Software that replicate and install itself without user consent. The copies can be installed into programs,data files,boot sector,macro files.\\
+Components:
+\begin{itemize}
+\item Infection mechanism: enables replication
+\item Trigger: event that makes payload active
+\item Payload: (malicious or benign)
+\end{itemize}
+The executable changes in size so the virus is easy to spot with a hash table.\\
+However the virus could place itself in an used PE header so there is no change in size.\\
+\textbf{Concealment mechanism}
+\begin{itemize}
+\item Encrypted virus
+\item Polymorphic virus
+\item Metamorphic virus
+\end{itemize}
+A virus can modifiy the MBR so it is loaded in memory even before the operating system.
+\section{Rootkit}
+The kernel is organized in protection rings. Eg. going from inside to the outside: hardware,drivers,application,user space.\\
+The rootkit can inject to kernel and defeat disk encryption eg. stone bootkit.\\
+It can be persistent or memory based, in user level or kernel mode.
+\section{Counter measures}
+Prevention is ideal but difficult. Realistically you need: detection,identification,removal. Virus and antivurs tech have both evolved:
+\begin{itemize}
+\item Signature scanners\\
+Every time the malware is loaded in memory it will look the same\\
+It is a purely reactive strategy $\to$ unknown malware does not have a signature
+\item Heuristics: checks for common features\\
+Instead of having a perfect match it uses common features.
+\item Identify actions: behavioral fingerprint
+\item Machine learning
+\end{itemize}
+Evolution against heuristics $\to$ polymorphic virus\\
+It changes how it looks in memory through encryption for every new instance.\\
+Defense $\to$ generic decryption (aka sandboxing).\\
+At execution time code will be the same, at that point signature and heuristics work. Still malware can recognize if it is executed in an emulated environment, if so it will not decrypt its payload.\\
+Evolution $\to$ metamorphic virus: they rewrite the machine code in an automatic way. Fortunately this is very difficult to perform (eg. 14.000 lines of assembly code)\\
+Defense $\to$ behavioural detection: the basic idea is that malware behaves differently from legitimate software (eg. system calls, interaction with drivers, system interrupts). The risk of false positives is higher compared to signature and heuristics (for which an hash collision is needed).
+\newpage
+\section{Botnets}
+\textbf{Def.} a botnet is a virtual network of infected machines under the control of a "bot herder".\\
+It is managed through a command and control server which can push configuration files and update functionalities.
+\subsection{Centralised archtecture}
+Bots communicate with the bot herder via IRC or HTTP. For the latter there a re two approaches: either the bot contact a fixed (set of) IP or it resolves domain dynamically.\\
+C\& C server is a single point of failure: who controls the C\&C controls the botnet.\\
+Centralised botnets take downs happen by \emph{sinkholing}: C\&C server needs to be protected:\\\\
+\textbf{Fast-flux:} one domain is mapped to different IP addresses\\\\
+\textbf{Domain-flux:} each bot generates valid domain names periodically with a DGA (domain generation algorithm) and resolves them. If bots get no answer from a generated domain they pass to the next in the list. If the DGA generates a domain which already exist then botnets may cause an unintentional dos attack.
+\subsection{P2P architecture}
+It is more robust than centralised. Commands are spread through the network, bots can act as both slaves and masters. When a new machine is infected:
+\begin{itemize}
+\item Hard coded list of peer are contacted
+\item Mixed p2p/centralised approach (eg. a centralised web cachce with list of peers)
+\item Infected bot inherits peer list from infector
+\end{itemize}
+There are three types of p2p botnets:
+\begin{itemize}
+\item \textbf{Parasite}\\
+All bots are selected from vulnerable hosts within an existing p2p network
+\item \textbf{Leeching}\\
+Bot candidates may be vulnerable hosts that were either inside or outside an existing p2p network.
+\item \textbf{Bot-only}\\
+It builds its own network in which all members are bots.
+\end{itemize}
+\textbf{Usage:} botnets are used to perform DDoS,send spam,exploit computational power, steal sensitive information, be rented to other criminals.
+
 \end{document}

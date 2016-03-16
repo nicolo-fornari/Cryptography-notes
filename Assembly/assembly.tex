@@ -20,11 +20,29 @@
 \item Store result of operations
 \item Manipulate data in them (shift registers)
 \end{itemize}
-
+\textbf{Registers overview}\\\\
 \includegraphics[scale=0.6]{registers.png}
+\newpage
+\textbf{Main registers}\\\\
+\begin{tabular}{|c|c|c|c|}
+\hline 
+32 bit & 16 bit & 8 bit (high) & 8 bit (low) \\ 
+\hline 
+EAX & AX & AH & AL \\ 
+\hline 
+EBX & BX & BH & BL \\ 
+\hline 
+ECX & CX & CH & CL \\ 
+\hline 
+EDX & DX & DH & DL \\ 
+\hline 
+\end{tabular} 
+\\\\
+EAX, AX, AH and AL are called the \textbf{Accumulator} registers and can be used for I/O port access, arithmetic, interrupt calls etc.\\\\
+EBX, BX, BH, and BL are the \textbf{Base} registers and are used as base pointers for memory access. This register is also sometimes used to store return value from an interrupt in. \\\\
+ECX, CX, CH, and CL are also known as the \textbf{Counter} registers. \\\\
+EDX, DX, DH, and DL are called the \textbf{Data} registers and can be used for I/O port access , arithmetic and some intrerrupt calls.
 
-\textbf{Why EAX,EBX,ECX?}
-Registers AL,AH,BL,BH,CL,CH,DL,DH are of 16 bits each and can be used in pairs: AX, BX, CX, DX
 \newpage
 \section{Hello world}
 \begin{minted}[
@@ -124,6 +142,7 @@ Linux system calls can be used in an assembly program with the following steps:
 \item \url{http://www.codeproject.com/Articles/315505/How-processor-assembler-and-programming-languages}
 \item \url{https://en.wikipedia.org/wiki/X86_instruction_listings}
 \item \url{http://www.tutorialspoint.com/assembly_programming/assembly_system_calls.htm}
+\item \url{http://www.safemode.org/files/zillion/shellcode/doc/Writing_shellcode.html}
 \end{enumerate}
 
 \end{document}

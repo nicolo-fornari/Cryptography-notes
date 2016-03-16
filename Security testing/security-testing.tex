@@ -177,5 +177,41 @@ Controls:
 \item State password requirements explicitly
 \item Hide dangerous security options in deeply nested menus
 \end{itemize}
+\chapter{Taint analysis}
+Question: is a variable containing a tainted value?
+\section{Flow analysis}
+Flow analysis is a general static analysis framework that can be instantiated in several specific code analyses, among which taint analysis.\\
+We can represent a program as a control flow graph. We propagate flow information until a fixed point is reached.\\\\
+\textbf{Control flow graph:} $CFG = (N,E,n_e,n_x)$\\
+N is a node set. E is the edge set $E \subset N \times N$. $n_e$ entry node, $n_x$ exit node.\\
+For conditional statements there will be two successors. The same for loops.
+\begin{itemize}
+\item Flow information: 
+\item Transfer function: $OUT[n]= f_n(IN[n])$
+\item Confluence (meet) operator $\wedge$: join flow values coming from the OUT of the predecessors (or successors) of current node n
+\item Direction of propagation: forward (look at predecessors) or backward (look at successors)
+\end{itemize}
+\textbf{Example of inputs:} set of values or booleans. For sets we can use union and intersection for the meet operator while for booleans we can use the logical and.\\
+\textbf{Assumptions:}
+\begin{itemize}
+\item Identity is a valid transfer function: $OUT[n] = IN[n]$\\
+\item We can replace two nodes with the composition of the two transfer functions $f,g$.\\
+\item $\wedge$ is associative,commutative and idempotent ($x \wedge x = x$)\\
+\item Top operator: $\exists T \in V,T \wedge x = x$\\
+\item Transfer function is monotonic. Note that $x leq y$ means $x \wedge y = x$
+\end{itemize}
+\textbf{Def} bottom $\perp$ st. $\perp \leq x \forall x$\\
+If a bottom element exists convergence descends from monotonicity. If $V$ is finite then $\perp$ exists.\\\\
+\textbf{Meet over path}\\
+$MOP[n] = \bigwedge_{p\in P_n}f_p(T)$ where $P_n$ are all the paths leading to node $n$.\\Note: if there are loops then $P_n$ is an infinite set.\\
+Example: see slide n 13\\\\
+\textbf{Def.} Exact solution $EX[n] = \bigwedge_{p \in feas(P_n)}f_p(T)$\\
+\textbf{conservativity}\\
+All possible executions are taken into account. The weakness is that there might be some extra values which do not belong to any solutions(false alarms). 
+$$ EX[n] \geq MOP[n] \geq FA[n]$$
+when transfer functions are distributive  flow analysis produces the MOP solution:
+$$ f_n(x \wedge y) = f_n(x) \wedge f_n(y) \implies MOP[n] = FA[n] $$
+
+
 
 \end{document}
