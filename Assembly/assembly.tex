@@ -12,6 +12,36 @@
 \title{Security testing}
 \begin{document}
 %\maketitle
+\chapter{Memory}
+Memory is just bytes of temporary storage space that are numbered with addresses. This memory can be accessed by its addresses, and the byte at any particular address can be read from or written to.\\\\
+\emph{Pointers} are a special type of variable used to store addresses of memory locations to reference other information.
+Because memory cannot actually be moved, the information in it must be copied. However, it can be computationally
+expensive to copy large chunks of memory around to be used by different functions or in different places.A new block of memory must be allocated for the copy destination before the source can be copied. Pointers are a solution to this problem. Instead of copying the large block of memory around, a pointer variable is assigned the address of that large memory block. Then this small 4-byte pointer
+can then be passed around to the various functions that need to access the large memory block.\\\\
+The processor has its own special memory, which is relatively small. These portions of memory are called registers,and there are some special registers,one of the most notable is the EIP (extended instruction pointer).\\
+The EIP is a pointer that holds the address of the currently executing
+instruction. Other 32-bit registers that are used as pointers are the extended base pointer (EBP) and the extended stack pointer (ESP).
+\section{Memory declaration}
+When programming in a high-level language, like C, variables are declared using a data type. These data types can range from integers to characters to custom user-defined structures. One reason this is necessary is to properly allocate space for each variable.\\\\
+In addition, variables can be declared in \emph{arrays}. An array is just a list of N elements of a specific data type. So a
+10-character array is simply 10 adjacent characters located in memory. An array is also referred to as a \emph{buffer}, and a character array is also referred to as a \emph{string}.\\\\
+One important detail of memory on x86 processors is the byte order of 4-byte words. The ordering is known as \emph{little endian}, meaning that the least significant byte is first.\\\\
+For any string a zero, or null byte, delimiter is used to terminate it and tell any function that is dealing with the string to stop operations there.
+\section{Program memory segmentation}
+Program memory is divided into five segments: text, data, bss, heap, and stack. Each segment represents a special portion of memory that is set aside for a certain purpose.As a program executes, the EIP is set to the first instruction in the text segment. The processor then follows an execution loop that does the following:
+\begin{enumerate}
+\item Read the instruction that EIP is pointing to.
+\item Add the byte-length of the instruction to EIP.
+\item Execute the instruction that was read in step 1.
+\item Go to step 1
+\end{enumerate}
+Write permission is disabled in the text segment, as it is not used to store variables, only code. This prevents people
+from actually modifying the program code, and any attempt to write to this segment of memory will cause the program to alert the user that something bad happened and kill the program. Another advantage of this segment being read-only is that it can be shared between different copies of the program, allowing multiple executions of the program at the same time without any problems. It should also be noted that this memory segment has a fixed size, because nothing ever changes in it.\\\\
+The \emph{data} and \emph{bss} segments are used to store global and static program variables. The data segment is filled with the initialized global variables, strings, and other constants that are used through the program. The bss segment is filled with the uninitialized counterparts. Although these segments are writable, they also have a fixed size.\\\\
+The \emph{heap} segment is used for the rest of the program variables. One notable point about the heap segment is that itisn't of fixed size, meaning it can grow larger or smaller as needed.\\\\
+The \emph{stack} segment also has variable size and is used as a temporary scratchpad to store context during function calls.
+When a program calls a function, that function will have its own set of passed variables, and the function's code will be at a different memory location in the text (or code) segment. Because the context and the EIP must change when a
+function is called, the stack is used to remember all of the passed variables and where the EIP should return to after the function is finished.
 \chapter{Assembly}
 \section{Registers}
 \textbf{What are registers for?}
