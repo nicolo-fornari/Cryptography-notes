@@ -534,4 +534,168 @@ It is a kind of traceback. It is quite difficult
 Capability is made of marks (unique hash values) set by routers on the path from sender to receiver. Routers check validity of marks upon response.
 \end{itemize}
 \textbf{Capabilities limitation:} capability can be saturated
+\chapter{Cyber crime market}
+There can be many type of markets: financial,work/job position etc. \\
+Cyber markets were originally in IRC (but being unorganized it failed completely) and then moved to web-forums. What is traded? Data,knowledge and services: eg. attacking tools, exploits, vulnerabilitites,accounts,money laundry,CCNs etc.
+There are two kind of market:
+\begin{itemize}
+\item TOR based market\\
+It is mostly on illegal goods in traditional sense (eg. drugs,weapons)
+\item Closed market
+\end{itemize}
+These markets are closed by entry selection. Some of them are typically national: eg. russian,chinese. Note that this "authentication" mechanism based on the difficulty of learning the language is not secure.\\
+Markets can offer low-tech services (spam advertize,stolen credentials) or high tech: attack delivery technologies,malware/specialized payloads.
+\section{Composition of an attack}
+Elements of an attack
+\begin{itemize}
+\item User connections
+\item Attack delivery
+\item Malware infection
+\item Monetisation mechanism
+\end{itemize}
+Most products sold in the markets enable the attacker to perform only one of these steps:
+\begin{itemize}
+\item Traffic brokers,stolen accounts $\to$ connections
+\item Exploit kits,stand alone expoloits $\to$ attack delivery
+\item Ransomware,banking malware $\to$ malware
+\item CCn,banking info $\to$ monetisation
+\end{itemize}
+Each of these steps can be combined by an attacker to obtain a set of characteristics that suits them
+\begin{itemize}
+\item Traffic from northern europe
+\item Exploit kits for recent IE versions
+\item Malware that does not infect CSI countries
+\item Attack UK bank costumers
+\end{itemize}
+\chapter{System hardening}
+All the system have a default configuration (pc,servers,mainframes). Moreover fresh installations of an operating system offer default services (DHCP,NetBios,SSH,VNC).\\
+System hardening is the process by which a system's configuration is tuned to improve its security without compromising its functionality.
+\section{Attack surfaces}
+\begin{itemize}[noitemsep]
+\item Weak passwords
+\item SW vulnerabilities
+\item Misconfigurations
+\item Services listening on the network
+\item Inaccurate access control
+\end{itemize}
+\textbf{Minimality principle:} no user and no system component or process should be authorised to perform actions that are not strictly necessary for their normal operations.\\
+It can be applied to both users and processes.\\
+A \emph{system} should be configured such that it does not embed or enable functionalities that are not needed for normal operation (eg. microkernel)\\
+A \emph{user} should be authorised to only access and modify resources that are necessary for their normal operations.\\
+\textbf{Example:} compile the kernel with just what is needed.
+\section{User authentication}
+There are two steps: \emph{identification} and \emph{verification}. The final goal is to link the physical user with its representation in the system. Here we list four means of authentication:
+\begin{itemize}[noitemsep,nolistsep]
+\item Knows: password,PIN,graphical password
+\item Posses: key,token,smartcard
+\item Is (static biometric): fingerprint,retina
+\item Does (dynamic biometrics): voice,sign
+\end{itemize}
+They can be used alone or combined and of course they all have problems.
+\subsection{Knows}
+\textbf{Password aging}
+"Frequently" change passwords decreases attack surfaces (less time for attacker to crack hash file). However users will have to create and remember more passwords for one account. It is important to give users time to think of good password (eg. do not force users to change the password before they can log in). There must be a balance between security and usability.\\\\
+\textbf{Draw a secret scheme}\\
+It is easier to remember and there are low error rates but still adjacent coordinates are more likely to be used in sequence.\\\\
+\textbf{Graphical password}\\
+The user clicks on some pixels among a set of highlighted ones and then to log in the users will have to click (possibly in the same sequence). Drawbacks: shoulder surfing; is it easy for the user to change?
+\subsection{Posses}
+\textbf{Token authentication}\\
+Examples: magnetic stripe card,memory card,smartcard etc.\\
+Token based: it is used to compute a response to challenge. It can be used to prevent shoulder surfing (even if the attacker sees the current value he can not predict the next valid one).\\
+The most common challenge-response mechanism is based on time syncronization: token and server have a syncronized clock so they will generate the same number at a given time.\\\\
+\textbf{Memory card}\\
+It stores but it does not process data. It easy to read and replicate the magnetic strip.\\\\
+\textbf{Smartcard}\\
+They have their own processor,memory,I/O ports. They include a crypto chip, they are tamper resistant.
+\subsection{Biometric}
+\textbf{Physiological (static):} iris,fingerprint, hand,retinal and face recognition\\
+See picture for graph/accuracy: 
+\begin{itemize}
+\item Hand $\to$ sweat palms, temperature
+\item Face $\to$ glasses,beard,light conditions,picture of a face,make up etc.
+\item Voice $\to$ cold
+\end{itemize}
+\textbf{Behavioural (dynamic):} voice,typing pattern,hand signature,gesture,gait.
+\chapter{Firewall}
+Firewalls are perimetral network components that filter incoming (outgoing) traffic from (to) the network.They have different policies:\\
+\textbf{Default deny:} nothing is allowed to pass expect what is permitted\\\\
+\textbf{Default permit:}everything is allowed except for what is denied\\
+It is suitable for open organizations like universities or home systems.\\\\
+\textbf{Firewall types:}
+\begin{itemize}
+\item Static packet filtering
+\item Stateful packet filtering
+\item Proxies (application-level or circuit level gateways)
+\end{itemize}
+\textbf{Firewall basing}
+\begin{itemize}
+\item Stand alone machine
+\item SW module in router or LAN switch
+\item Bastion host
+\item Host-based firewall (see slide)
+\item Personal firewall (see slide)
+\end{itemize}
+\newpage
+\section{Static packet filtering}
+Header information is used for filtering (eg. protocol number,source and destination ip and port numbers). Stateless: each IP packet is examined isolated from what is happened in the past. \\
+It is often implemented by routers, it is simple and fast and has a low demand on resources.
+\textbf{Access lists}\\
+\textbf{Standard ACL:} \$ number \$ action \$ src (wildcard)	
+\begin{itemize}
+\item Number $\to$ identifies rule
+\item Action $\to$ accept/deny
+\item Src $\to$ source ip
+\item Wild card (inverse of subnet mask) $\to$ it says which part of the IP should be checked
+\end{itemize}
+\section{Stateful packet filtering}
+It looks at the history of the packets passing through the firewall.\\
+Stateful firewalls allow user to define states over stateless protocols. For these protocols there is no termination sequence (eg. TCP FIN 4-way handshake) so a timeout is implemented, depending on the application.\\
+Possible states
+\begin{itemize}
+\item NEW $\to$ packet trying to open a new connection
+\item ESTABLISHED $\to$ incoming packet is realtive to a connection already initiated
+\item RELATED $\to$ new connection related to an existing one (eg. FTP)
+\item INVALID $\to$ none of the above (eg. incoming packet with ACK  but not belonging to EASTABLISHED connection)
+\end{itemize}
+With a stateful firewall you can prevent ACK scans (OS fingerprinting).\\
+\textbf{Pros:} more powerful rules, policy definition is much simpler, very diffused.\\
+\textbf{Cons:} severe impact on firewall performance, deep packet inspection slows down packet check, application support may be very complicated.
+\section{Proxy}
+\textbf{Def.} It is a network component that mediates network communications.\\
+Proxy acts both as a client and server.
+\subsection{Open proxy}
+Proxy connnects any client on the internet to any server on the internet.\\
+It enables the user to achieve some level of anonymity on the network. Note that there are techniques that allow the server to know the client's ip thorugh third parties (eg. flash). \\
+Trust issues $\to$ all trust is put on proxy service (it is ok to bypass organisation's blacklist) but probably not trustworthy for sensible internet traffic. It may also be sued for malware distribution.
+\subsection{Reverse proxy}
+The situation is "double blind": the client thinks he is talking to the (lets say) FTP server but actually he is talking to the reverse proxy.\\
+\textbf{Pros:} hide properties of internal servers (IP, non custom service ports, versioning - if too aggressive it may cause disservice eg. declaring a fake server version breaking the protocol). It may be used for load balancing (several internal replicas of a webserver) or caching server's content.
+\subsection{Application level proxy}
+\textbf{Pros.} information hiding, robuts authentication and logging, cost effective,less complex\\
+\textbf{Cons.} keeping up with new applications, custom implementations may be expensive.
+\subsection{Circuit level proxy (or gateway)}
+It operates at level 4 on OSI scale. It simply crosses client connection to inside hosts.
+\subsection{Network address translation}
+NAT operates at level 3 and acts as a reverse proxy. It maps (sourceIP, sourcePort) to (destIP,destPort). Port address translation (PAT) to resolve conflicts.
+\section{Bastion host}
+It is a system identified by the firewall administrator as a critical strong point in the network security.
+\begin{itemize}
+\item Secure version of OS (hardened system)
+\item Only essential services
+\item Each proxy maintains detail audit information
+\item Each proxy runs as a non-privileged separate user
+\end{itemize}
+\section{Administration}
+\begin{itemize}
+\item Access with secure connecion
+\item Logging: on a remote logging server
+\item Strategies of disaster recovery
+\item Security incidents
+\end{itemize}
+\section{Firewall topology}
+If you want a firewall to work you have to put it in the right place.
+See slides
+\chapter{Intrusion detection system}
+
 \end{document}

@@ -10,6 +10,8 @@
 \usepackage{enumitem}
 \author{Nicolò Fornari}
 \title{Security testing}
+\newtheorem{remark}{Remark}
+\begin{document}
 \begin{document}
 %\maketitle
 \chapter{Memory}
@@ -41,7 +43,16 @@ The \emph{data} and \emph{bss} segments are used to store global and static prog
 The \emph{heap} segment is used for the rest of the program variables. One notable point about the heap segment is that itisn't of fixed size, meaning it can grow larger or smaller as needed.\\\\
 The \emph{stack} segment also has variable size and is used as a temporary scratchpad to store context during function calls.
 When a program calls a function, that function will have its own set of passed variables, and the function's code will be at a different memory location in the text (or code) segment. Because the context and the EIP must change when a
-function is called, the stack is used to remember all of the passed variables and where the EIP should return to after the function is finished.
+function is called, the stack is used to remember all of the passed variables and where the EIP should return to after the function is finished.\\\\
+As the name implies, the stack segment of memory is, in fact, a stack data structure. When an item is placed into a stack, it's known as \emph{pushing}, and when an item is removed from a stack, it's called \emph{popping}. The ESP register is used to keep track of the address of the end of the stack, which is constantly changing as items are pushed into and popped from it.
+Because this is very dynamic behavior, it makes sense that the stack is also not of a fixed size. Opposite to the growth
+of the heap, as the stack changes in size, it grows upward toward lower memory addresses.
+\begin{remark}
+The EBP register is sometimes called the \emph{frame pointer} FP or \emph{local base pointer} LB.
+The EBP is used to reference variables in the current stack frame.
+\end{remark}
+Each stack frame contains the parameters to the function, its local variables, and two pointers that are necessary to put things back the way they were: the \emph{saved frame pointer} SFP and the \emph{return address}.
+The stack frame pointer is used to restore EBP to its previous value, and the return address is used to restore EIP to the next instruction found after the function call.
 \chapter{Assembly}
 \section{Registers}
 \textbf{What are registers for?}

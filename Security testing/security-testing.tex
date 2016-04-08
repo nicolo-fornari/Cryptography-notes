@@ -198,7 +198,7 @@ For conditional statements there will be two successors. The same for loops.
 \item We can replace two nodes with the composition of the two transfer functions $f,g$.\\
 \item $\wedge$ is associative,commutative and idempotent ($x \wedge x = x$)\\
 \item Top operator: $\exists T \in V,T \wedge x = x$\\
-\item Transfer function is monotonic. Note that $x leq y$ means $x \wedge y = x$
+\item Transfer function is monotonic. Note that $x \leq y$ means $x \wedge y = x$
 \end{itemize}
 \textbf{Def} bottom $\perp$ st. $\perp \leq x \forall x$\\
 If a bottom element exists convergence descends from monotonicity. If $V$ is finite then $\perp$ exists.\\\\
@@ -207,11 +207,27 @@ $MOP[n] = \bigwedge_{p\in P_n}f_p(T)$ where $P_n$ are all the paths leading to n
 Example: see slide n 13\\\\
 \textbf{Def.} Exact solution $EX[n] = \bigwedge_{p \in feas(P_n)}f_p(T)$\\
 \textbf{conservativity}\\
-All possible executions are taken into account. The weakness is that there might be some extra values which do not belong to any solutions(false alarms). 
+All possible executions are taken into account. The weakness is that there might be some extra values which do not belong to any solutions (false alarms). 
 $$ EX[n] \geq MOP[n] \geq FA[n]$$
 when transfer functions are distributive  flow analysis produces the MOP solution:
 $$ f_n(x \wedge y) = f_n(x) \wedge f_n(y) \implies MOP[n] = FA[n] $$
-
-
+\section{Interprocedural}
+To avoid loops in graph you introduce \emph{call nodes}.
+This new representation presents an issue: there are also unrealizable paths.
+\textbf{Def. Realizable path}
+\begin{itemize}
+\item p is empty
+\item The first return node is immediately preceded by a matching call node and the path obtained after removing these nodes is in turn realizable.
+\end{itemize}
+\begin{remark}
+Note that unfeasible and unrealizable paths are different.
+Example of unfeasible: if we have mutually exclusive conditions it will be impossible to have a path in which both conditions are true.
+The latter violates the matching between call and return
+\end{remark}
+\textbf{Call string method}\\
+Advantages: It is simple and easy to implement\\
+Disadvantage: exponential complexity\\\\
+\textbf{Functional method}
+It has some restrictions on applicability but it has better complexity.
 
 \end{document}
