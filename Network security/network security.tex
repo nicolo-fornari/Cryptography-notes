@@ -661,6 +661,19 @@ Possible states
 With a stateful firewall you can prevent ACK scans (OS fingerprinting).\\
 \textbf{Pros:} more powerful rules, policy definition is much simpler, very diffused.\\
 \textbf{Cons:} severe impact on firewall performance, deep packet inspection slows down packet check, application support may be very complicated.
+\newpage
+\section{Network topologies}
+\emph{If you want a firewall to work you have to put it in the right place}
+\subsection{Simple configuration}
+Border router implementsstatic inward and outward filtering. The best policy is to drop packets with no answer. Eg. do not allow packets whose final destination is the firewall.  The firewall has several inward facing network interfaces. Each interface is dedicated to a network level. It is a single point of failure.\\
+\includegraphics[scale=0.3]{firewall/simple.png}
+\subsection{Divide et impera: cascade}
+Interdependent firewall policies. Eg. firewall at level 1 must allow packets eventually directed toward level 2. It requires a good mixture of NAT and PAT policies,firewall configurations and good separation of services. It has high design, management and mainteinance costs.
+\includegraphics[scale=0.3]{firewall/cascade.png}
+\subsection{Divide et impera: parallel}
+\includegraphics[scale=0.3]{firewall/parallel.png}
+\subsection{Mixed}
+\includegraphics[scale=0.3]{firewall/mixed.png}
 \section{Proxy}
 \textbf{Def.} It is a network component that mediates network communications.\\
 Proxy acts both as a client and server.
@@ -693,9 +706,6 @@ It is a system identified by the firewall administrator as a critical strong poi
 \item Strategies of disaster recovery
 \item Security incidents
 \end{itemize}
-\section{Firewall topology}
-If you want a firewall to work you have to put it in the right place.
-See slides
 \chapter{Intrusion detection system}
 
 \end{document}
