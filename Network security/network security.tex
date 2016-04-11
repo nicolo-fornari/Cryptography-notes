@@ -707,5 +707,67 @@ It is a system identified by the firewall administrator as a critical strong poi
 \item Security incidents
 \end{itemize}
 \chapter{Intrusion detection system}
-
+There are three phases
+\begin{itemize}
+\item Data collection\\
+It can be host based or network based
+\item Data analysis\\
+Two distinct approaches: misuse detection ( list unwanted behaviour) or anomaly detection (build an average profile, report if current activity is significantly different from average)
+\item Action\\
+Report, log entry and (just IPS) block/alert
+\end{itemize}
+\textbf{Misuse detection}\\
+It is the IDS equivalent of "default allow" policies. There are "blacklist" patterns that are believed to be related to malicious activities (eg. system calls and payloads in network protocol). It is signature based and it can only detect patterns that are already known.\\\\
+\textbf{Anomaly detection}\\
+It assumes intruder behaviour differs form legitimate profile. Problem: users evolve: a new legitimate activity may look suspicious.
+\section{Architectural aspects}
+\textbf{External NIDS}
+\begin{itemize}[noitemsep,nolistsep]
+\item Analysis of all incoming traffic
+\item Only general signatures 
+\item All "detected attacks" are logged
+\end{itemize}
+\textbf{Internal NIDS}
+\begin{itemize}[noitemsep,nolistsep]
+\item Analysis only of traffic allowed by the firewall
+\item More specific signatures are possible
+\item It says nothing about attacks attempted but blocked by the firewall
+\end{itemize}
+\newpage
+\section{NIDS evasion}
+Signature based evasion can be fairly trivial: for instance $"/bin/bash"$ will be detected while $"/etc/../bin/bash"$ will not. This is a proof of concept: of course NIDS could use regexp or wildcard. More advanced techniques are typically based on IP fragmentation.
+\subsection{Reassembly time-out}
+The NID will wait for a shorter (compared to the client) amount of time for the second fragment.
+\includegraphics{IDS-evasion/1.jpg}\\
+Viceversa NIDS has higher riassembly timeout than receiving client\\
+\includegraphics{IDS-evasion/2.jpg}
+\subsection{Time to live}
+\includegraphics{IDS-evasion/3.jpg}
+\subsection{Fragment replacement}
+\includegraphics{IDS-evasion/4.jpg}
+\chapter{Vulnerability mitigation}
+\section{OS vulnerability mitigation}
+\textbf{DEP:} Data execution protection - data in memory is marked as non executable. It defeats code execution via stack corruption. Still with DEP attacker can redirect execution of code areas in memory. Eg. write a stack frame in memory and point to libc. Most memory corruption attacks rely on the attacker being able to guess start address of stack frame/heap/other areas of memory.\\
+\textbf{ASLR:} address space layout randomization - it randomizes location in memory of stack, heap and libraries.
+\section{Vulnerability patching}
+Problems related to patches: 
+\begin{itemize}
+\item Reboot is often required
+\item SW functionalities may change
+\item Deprecated third-party libraries
+\item Production systems need to be up and running
+\item A patch needs to be tested
+\end{itemize}
+\begin{remark}
+Counting vulnerabilities $\neq$ Security assessment. More vulnerabilites do not translate directly into risk of attacks. CVSS measures severity NOT risk.
+\end{remark}
+\section{CVSS vs Exploitation levels}
+\begin{itemize}
+\item EL1: $\exists$ vulnerability 
+\item EL2: $\exists$ PoC 
+\item EL3: the exploit is traded
+\item EL4: the vulnerability is reported and exploited
+\item EL5: real measure of the frequency of exploitation
+\end{itemize}
+\includegraphics[scale=0.5]{comparison.png}
 \end{document}
