@@ -2,7 +2,14 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
+\usepackage{graphicx}
 \usepackage{amssymb}
+\usepackage{fancyvrb}
+\usepackage{listings}
+\lstset{
+  basicstyle=\ttfamily,
+  mathescape
+}
 \usepackage{minted}
 \setlength\parindent{0pt}
 \def\labelitemi{$\cdot$}
@@ -204,56 +211,144 @@ Controls:
 \item Hide dangerous security options in deeply nested menus
 \end{itemize}
 \newpage
-\section{Taint analysis}
+\section{Flow analysis}
 Flow analysis is a general static analysis framework that can be instantiated in several specific code analyses, among which taint analysis.\\
 We can represent a program as a control flow graph. We propagate flow information until a fixed point is reached.\\\\
 \textbf{Control flow graph:} $CFG = (N,E,n_e,n_x)$\\
 N is a node set. E is the edge set $E \subset N \times N$. $n_e$ entry node, $n_x$ exit node.\\
 For conditional statements there will be two successors. The same for loops.
+\begin{minted}[frame=lines,linenos
+]{php}
+<?php $xx = explode(";",$_POST["x"]);
+$s = $_POST["y"];
+foreach ($xx as $x) {
+	$s = " " . $s;
+	if (htmlentities($x) == $x)
+		$s .= $x;	 }
+echo $s;
+?>
+\end{minted}
+\begin{center}
+\includegraphics[scale=0.5]{img/g1.jpg}
+\end{center}
+\textbf{Flow analysis framework}
 \begin{itemize}
-\item Flow information: 
-\item Transfer function: $OUT[n]= f_n(IN[n])$
-\item Confluence (meet) operator $\wedge$: join flow values coming from the OUT of the predecessors (or successors) of current node n
+\item Flow information: set $V$, it is the flow information propagated in the CFG, assigned to $IN[n]$ and $OUT[n]$
+\item Transfer function: $f_n(x): V \to V \hspace{2em} OUT[n]= f_n(IN[n])$
+\item Confluence (meet) operator $\wedge$: join flow values coming from the OUT of the predecessors (or successors) of current node n\\
+$ IN[n] = \wedge_{p \in pred(n)}OUT[p]$
 \item Direction of propagation: forward (look at predecessors) or backward (look at successors)
 \end{itemize}
-\textbf{Example of inputs:} set of values or booleans. For sets we can use union and intersection for the meet operator while for booleans we can use the logical and.\\
+\textbf{Example of inputs:} set of values or booleans. For sets we can use union and intersection for the meet operator while for booleans we can use the logical and.\\\\
 \textbf{Assumptions:}
 \begin{itemize}
-\item Identity is a valid transfer function: $OUT[n] = IN[n]$\\
-\item We can replace two nodes with the composition of the two transfer functions $f,g$.\\
-\item $\wedge$ is associative,commutative and idempotent ($x \wedge x = x$)\\
-\item Top operator: $\exists T \in V,T \wedge x = x$\\
+\item Identity is a valid transfer function: $OUT[n] = IN[n]$
+\item We can replace two nodes with the composition of the two transfer functions $f,g$.
+\item $\wedge$ is associative,commutative and idempotent ($x \wedge x = x$)
+\item Top element: $\exists T \in V,T \wedge x = x$
 \item Transfer function is monotonic. Note that $x \leq y$ means $x \wedge y = x$
 \end{itemize}
-\textbf{Def} bottom $\perp$ st. $\perp \leq x \forall x$\\
-If a bottom element exists convergence descends from monotonicity. If $V$ is finite then $\perp$ exists.\\\\
-\textbf{Meet over path}\\
-$MOP[n] = \bigwedge_{p\in P_n}f_p(T)$ where $P_n$ are all the paths leading to node $n$.\\Note: if there are loops then $P_n$ is an infinite set.\\
-Example: see slide n 13\\\\
-\textbf{Def.} Exact solution $EX[n] = \bigwedge_{p \in feas(P_n)}f_p(T)$\\
-\textbf{conservativity}\\
-All possible executions are taken into account. The weakness is that there might be some extra values which do not belong to any solutions (false alarms). 
-$$ EX[n] \geq MOP[n] \geq FA[n]$$
-when transfer functions are distributive  flow analysis produces the MOP solution:
-$$ f_n(x \wedge y) = f_n(x) \wedge f_n(y) \implies MOP[n] = FA[n] $$
-\section{Interprocedural}
-To avoid loops in graph you introduce \emph{call nodes}.
-This new representation presents an issue: there are also unrealizable paths.
-\textbf{Def. Realizable path}
+\textbf{Flow analysis algorithm}
+\begin{lstlisting}[frame=lines]
+for each node $n$
+	$IN[n] = T$
+	$OUT[n] = f_n(IN[n])$
+end for
+
+while any $IN[n]$ or $OUT[n]$ changes across iteration
+	for each node $n$
+		$IN[n] = \wedge_{p \in pred(n)}OUT[p]$
+		$OUT[n] = f_n(IN[n])$
+	end for
+end while
+\end{lstlisting}
+\textbf{Def} bottom $\perp$ st. $\perp \leq x \forall x$\\\\
+\textbf{Examples of Flow analysis:}
 \begin{itemize}
-\item p is empty
-\item The first return node is immediately preceded by a matching call node and the path obtained after removing these nodes is in turn realizable.
+\item Taint analysis
+\item Reaching definitions and reachable users
+\item Dominators and postdominators
+\item Constant propagation
+\item Pointer analysis
 \end{itemize}
-\begin{remark}
-Note that unfeasible and unrealizable paths are different.
-Example of unfeasible: if we have mutually exclusive conditions it will be impossible to have a path in which both conditions are true.
-The latter violates the matching between call and return
-\end{remark}
-\textbf{Call string method}\\
-Advantages: It is simple and easy to implement\\
-Disadvantage: exponential complexity\\\\
-\textbf{Functional method}
-It has some restrictions on applicability but it has better complexity.
+% 		CONVERGENCE --------------------------------
+%
+%If a bottom element exists convergence descends from monotonicity. If $V$ is finite then $\perp$ exists.\\\\
+%
+%
+%\textbf{Meet over path}\\
+%$MOP[n] = \bigwedge_{p\in P_n}f_p(T)$ where $P_n$ are all the paths leading to node $n$.\\Note: if there are loops then $P_n$ is an infinite set.\\
+%Example: see slide n 13\\\\
+%\textbf{Def.} Exact solution $EX[n] = \bigwedge_{p \in feas(P_n)}f_p(T)$\\
+%\textbf{conservativity}\\
+%All possible executions are taken into account. The weakness is that there might be some extra values which do not belong to any solutions (false alarms). 
+%$$ EX[n] \geq MOP[n] \geq FA[n]$$
+%when transfer functions are distributive  flow analysis produces the MOP solution:
+%$$ f_n(x \wedge y) = f_n(x) \wedge f_n(y) \implies MOP[n] = FA[n] $$
+%\section{Interprocedural}
+%To avoid loops in graph you introduce \emph{call nodes}.
+%This new representation presents an issue: there are also unrealizable paths.
+%\textbf{Def. Realizable path}
+%\begin{itemize}
+%\item p is empty
+%\item The first return node is immediately preceded by a matching call node and the path obtained after removing these nodes is in turn realizable.
+%\end{itemize}
+%\begin{remark}
+%Note that unfeasible and unrealizable paths are different.
+%Example of unfeasible: if we have mutually exclusive conditions it will be impossible to have a path in which both conditions are true.
+%The latter violates the matching between call and return
+%\end{remark}
+%
+% --------------------------------------
+\newpage
+\subsection{Call string method}
+Flow information $x$ is propagated together with the associated call string: $(x,CS)$
+\begin{center}
+\includegraphics[scale=0.5]{img/g2.jpg}
+\end{center}
+\textbf{Example 1:} $IN[6] = (x_1,C2),(x_3,C4)$\\\\
+\textbf{Example 2:} The meet operator is applied only when call strings are identical.\\\\
+$OUT[6] = (y_1,C2),(y_2,C_4)$\\
+$OUT[7] = (z_1,C2),(z_2,C4)$\\
+$IN[8] = OUT[6] \wedge OUT[7] = (y_1 \wedge z_1,C2),(y_2 \wedge z_2,C4)$\\\\
+At return nodes, flow information is propagateed only to call nodes matching the last element of the call string, which is removed.
+\subsection{Functional method}
+A summary transfer function $\phi_P$ is computed for each procedure $P$ and is used at each node where $P$ is called. the summary transfer functions $\phi_P$ are known in closed form when $\wedge = \cup$ and transfer function $f_n$ have the following structure:
+$$ f_n(x) = GEN[n] \cup (x \setminus KILL[n])$$
+\newpage
+\subsection{Taint analysis}
+Taint analysis aims at keeping track of tainted variables along the execution paths:
+\begin{itemize}
+\item {\bf Static taint analysis:} a flow analysis conducted on the CFG providing conservative results
+\item {\bf Dynamic taint analysis:} the taint status of variables is updated at run time and execution is interrupted if a tainted variable is used at a security critical statement.
+\end{itemize}
+The \emph{taint status} of a variable is true if the variable may contain unsanitized user input, false if it is ensured not to contain it.\\\\
+Flow  information propagated for taint analysis consists of taint sets, formally $V = \mathcal{P}(X)$, where $X$ is the set of all program variables.\\\\
+At a join point a variable is tainted if its status is tainted in any of the incoming edges. As a consequence the meet operator is union, so
+\begin{itemize}
+\item Top is the empty set: $T \wedge x = x \forall x$
+\item Monotonically decreasing flow values correspond to increasingly larger taint sets
+\item Bottom is $X$
+\end{itemize}
+The transfer function for taint analysis has the form:
+$$ f_n(x) = GEN[n] \cup (x \setminus KILL[n])$$
+$GEN[n] = \{ x | x $ is assigned an input value at statement $n \} \cup \{ x | \exists y: x$ is assigned a value obtained from $y \wedge y \to T\}$\\\\
+$KILL[n] = \{x|x$ is sanitized by statement $n \} \cup \{ x| \forall y: x $ is assigned a value obtained from $y \wedge y \to F \}$\\\\
+
+\textbf{Taint analysis algorithm}
+\begin{lstlisting}[frame=lines]
+for each node $n$
+	$IN[n] = \{\}$
+	$OUT[n] = GEN[n]$
+end for
+
+while any $IN[n]$ or $OUT[n]$ changes across iteration
+	for each node $n$
+		$IN[n] = \cup_{p \in pred(n)}OUT[p]$
+		$OUT[n] = GEN[n] \cup (IN[n] \ KILL[n])$
+	end for
+end while
+\end{lstlisting}
 \newpage
 \section{Penetration testing}
 Type of pentetration tests:
