@@ -1,4 +1,4 @@
-\documentclass[10pt,a4paper]{book}
+\documentclass[10pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -11,8 +11,7 @@
 \title{Security testing}
 \definecolor{mygray}{gray}{0.9}
 \begin{document}
-%\maketitle
-\chapter{Attack Taxonomy}
+\maketitle
 \section{Buffer Overflow}
 \subsection{Stack and Heap}
 The \emph{stack} is the memory set aside as scratch space for a thread of execution. When a function is called, a block is reserved on the top of the stack for local variables and some book keeping data. When that function returns, the block becomes unused and can be used the next time a function is called. The stack is always reserved in a LIFO (last in first out) order; the most recently reserved block is always the next block to be freed. This makes it really simple to keep track of the stack; freeing a block from the stack is nothing more than adjusting one pointer.\\\\
@@ -35,10 +34,44 @@ The OS kernel can be patched so as to forbid the execution of instructions whose
 \begin{itemize}
 \item functions trampolines are addede to the stack by gcc for nested functions
 \item signals handlers are allocated on the user stack by Linux
-\item dynamically generated code bmay reside on the stack
+\item dynamically generated code may reside on the stack
 \end{itemize}
 \textbf{Canary words}\\
 Canaries or canary words are known values that are placed between a buffer and control data on the stack to monitor buffer overflows. When the buffer overflows, the first data to be corrupted will usually be the canary, and a failed verification of the canary data is therefore an alert of an overflow, which can then be handled, for example, by invalidating the corrupted data.
+\newpage
+\section{String format}
+\begin{minted}[frame=lines,
+]{c}
+#include<stdio.h>
+int main(int argc,char* argv[]) {
+	if (argc > 1)
+		printf(argv[1]);
+	return 0;
+}
+\end{minted}
+\begin{itemize}
+\item \%d \%d pops two integers in decimal format
+\item \%c \%c pops two characters
+\item \%p \%p pops to pointers in hexadecimal format
+\item \%10\$d pops $10^{th}$ integer
+\end{itemize}
+\textbf{Problem.}the attacker can insert formatting instructions that pop (eg. \%s,\%x) or push (eg. \%n) values from/onto the call stack. This is possible if the formatting function has an undeclared number of parameters specified through ellipsis.\\\\
+\textbf{Controls.} 
+\begin{itemize}
+\item Use constant strings as string formats
+\item Sanitize user input
+\item Use stream operator "$<<$" in C++ rather that functions of the \emph{printf} family
+\end{itemize}
+\section{Integer overflow}
+\textbf{Problem.} an implicit or explicit integer type conversion produces unexpected results due to truncation or bit extension; integer operations overflow producing unexpected results.\\\\
+\textbf{Controls:}
+\begin{itemize}
+\item Use unsigned integers if possible
+\item Do not mix unsigned and signed integers in operations
+\item Use large enough integer types
+\item Check explicitly that expected boundaries are not exceeded
+\end{itemize}
+\newpage
 \section{Injecton}
 \subsection{SQL injection}
 \textbf{Problem.} user provided data is used to form an SQL query (eg. through string concatenation) and the attacker provides malformed data aimed at changing the semantics of the query.\\
@@ -170,9 +203,8 @@ Controls:
 \item State password requirements explicitly
 \item Hide dangerous security options in deeply nested menus
 \end{itemize}
-\chapter{Taint analysis}
-Question: is a variable containing a tainted value?
-\section{Flow analysis}
+\newpage
+\section{Taint analysis}
 Flow analysis is a general static analysis framework that can be instantiated in several specific code analyses, among which taint analysis.\\
 We can represent a program as a control flow graph. We propagate flow information until a fixed point is reached.\\\\
 \textbf{Control flow graph:} $CFG = (N,E,n_e,n_x)$\\
@@ -222,7 +254,8 @@ Advantages: It is simple and easy to implement\\
 Disadvantage: exponential complexity\\\\
 \textbf{Functional method}
 It has some restrictions on applicability but it has better complexity.
-\chapter{Penetration testing}
+\newpage
+\section{Penetration testing}
 Type of pentetration tests:
 \begin{enumerate}
 \item Authentication
@@ -231,4 +264,84 @@ Type of pentetration tests:
 \item Output Manipulation
 \item Information Leakage
 \end{enumerate}
+\textbf{Authentication}
+\begin{itemize}
+\item Brute force and or heuristics to guess the password
+\item Bypass authentication using a spoofed token
+\item Replay auth info eavesdropped on the network
+\end{itemize} 
+Prerequisites: determine the maximum login attempts allowed, the login/idle timeout, acquire user information\\\\
+\textbf{Session management}
+\begin{itemize}
+\item Hijack the session of another user and gather data or submit excessive or invalid input
+\item Replay submissions made by another user
+\item Submit direct URL requests with heuristically guessed session IDs
+\end{itemize}
+Prerequisites: determine the maximum number of concurrent sessions, identify cookie,hidden fields or URL parameters used for session management.\\\\
+\textbf{Input manipulation}\\
+\begin{itemize}
+\item Use exceptionally long character sequences for inputs of string type
+\item Injectio system commands
+\item Inject javascript or server side include code
+\item Use URL or UNICODE encoding to perform sys/SQL/JS/SSI injection
+\item Provide unauthorized paths with inputs requiring a file or directory
+\item Modify cookies or hidden fields or http header
+\item Provide invalid input to trigger the execution of error code
+\end{itemize}
+Prerequisites: determine the limitations on input variable length, protocol messages, data types and formats.\\\\
+\textbf{Output manipulation}
+\begin{itemize}
+\item Retrieve and manipulate cookies or hidden fields
+\item Retrieve and manipulate cached information, serialized objects
+\item Modifiy information stored in temporary files
+\end{itemize}
+Prerequistes: identify where the application output is stored on the client side\\\\
+\textbf{Information leakage}
+\begin{itemize}
+\item Find useful information in html code
+\item Examine messagges to obtain information about the internals of the application
+\end{itemize}
+Prerequistes: make assumptions about the technologies and programming environment used to develop the application.
+\newpage
+\section{Whitebox fuzzing}
+\textbf{Def. blackbox fuzzing:} to trigger a bug, such as buffer overflow, by randomly mutating well formed program inputs\\\\
+\textbf{Def. whitebox fuzzing:} to execute all feasible paths by means of symbolic execution
+\subsection{Symbolic execution}
+\textbf{Def. symbolic execution:} is a means of analyzing a program to determine what inputs cause each part of a program to execute. An interpreter follows the program, assuming symbolic values for inputs rather than obtaining actual inputs as normal execution of the program would.
+\begin{minted}[frame=lines,
+]{c}
+int testme(int x) {
+	int y = x+3;
+	if (y==13)
+		abort();
+	return 0;		
+}
+\end{minted}
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline 
+Concrete state & Symbolic state \\ 
+\hline 
+$x=0$ & $x=x_0$ \\ 
+\hline 
+$y=3$ & $y=x_0+3$ \\ 
+\hline 
+\end{tabular} 
+\end{center}
+\begin{enumerate}
+\item Execute a random test case
+\item Collect symbolic constraints along the concretely executed path
+\item Negate one or more branch condition in the path constraint
+\item Use a constraint solver to generate a new test input for the negated constraint
+\item Execute a new test cae, covering a new path. Iterate from 2.
+\end{enumerate}
+\textbf{Problem.} the constraint solver may not be powerful enough to determine concrete values that satisfy the negated path constraint. If necessary some constraints must be replaced with concrete values. In particular semplification may be necessary whenever non linear constraints  are involved or black box external functions are called.\\\\
+\textbf{Properties}
+\begin{itemize}
+\item Incompleteness: dynamic symbolic execution is complete only if the constraint solver can successfully solve all constraints without semplification
+\item Approximation: an input satisfying a simplified path condition is not ensured to execute the path of interest (divergence)
+\item Soundness: since generated tests are executable revealed faults are real faults
+\end{itemize}
+\textbf{Runtime error:} the condition that produces a run time error (eg. array out of bound, division by zero) is added to the path condition and a solution is searched\\\\
+\textbf{Assertions:} negated assertions are added to the path condition
 \end{document}
