@@ -43,8 +43,31 @@ The OS kernel can be patched so as to forbid the execution of instructions whose
 \item signals handlers are allocated on the user stack by Linux
 \item dynamically generated code may reside on the stack
 \end{itemize}
+\textbf{Bounds checking in C}\\
+The gcc compiler can be patched to perform full array bounds checking: from each pointer expression the base pointer is derived, then for each base pointer the allocated memory is known and can be checked.
+\begin{minted}[frame=lines,
+]{c}
+pp = get_base(p);
+n = get_size(pp);
+if (p-pp<n)
+	*p = *q;
+else
+	abort("Buffer overflow detected");
+\end{minted}
+\begin{remark}
+The performance costs are substancial (up to $30\times$ slowdown).
+\end{remark}
 \textbf{Canary words}\\
-Canaries or canary words are known values that are placed between a buffer and control data on the stack to monitor buffer overflows. When the buffer overflows, the first data to be corrupted will usually be the canary, and a failed verification of the canary data is therefore an alert of an overflow, which can then be handled, for example, by invalidating the corrupted data.
+Canaries or canary words are known values that are placed between a buffer and control data on the stack to monitor buffer overflows. When the buffer overflows, the first data to be corrupted will usually be the canary, and a failed verification of the canary data is therefore an alert of an overflow, which can then be handled, for example, by invalidating the corrupted data.\\\\
+\emph{Attacks:} if the position of the canary word is know it may be skipped (difficult to exploit). Moreover if the value of the canary word is known it can be preserved by bufferoverflow.\\\\
+\textbf{Conclusions}\\
+Code fixing is the ultimate solution but only for known vulnerabilities. Automated solutions have major limitations:
+\begin{itemize}
+\item They usually require OS kernel and or gcc compiler patching
+\item They mai limit the legal C code that can be executed
+\item they may not protect the code from heap overflow, function pointers
+\item They introduce substantia performance penalties
+\end{itemize}
 \newpage
 \section{String format}
 \textbf{Problem.} \\
@@ -190,36 +213,30 @@ While authentication checks are mandatory in the https protocol, if programmers 
 \subsection{DNS}
 Scenario example: application performs automated software update connecting to a server. Solution: rely on SSL.
 \section{Weak passwords}
-\textbf{Problems:}
+\textbf{Problems: password intrinsic weakness}
 \begin{itemize}
-\item Initial passsword is weak
-\item Long passwords are not allowed
-\item Short password are allowed
-\item Dictionary passwords accepted
-\item Alphanumeric-only passwords accepted
-\item No checks on number of login attempts
-\item User is locked out when too many login attempts are made (DoS)
-\item user is not requested to change password periodically
-\item Previous passwords are allowed when user changes password
-\item No secure channel/protocol is used
-\item Change passwords are not reauthenticated
-\item Passwords can be reset upon end user request based on weak information
-\item Reset passwords are specified by the user rather than being delivered securely
-\item Default password change is not enforced on first login
-\item Passwords are stored in clear
+\item Initial p. is weak, dictionary p. accepted
+\item Short p. are allowed and long p. are not
+\item Alphanumeric-only p. accepted
+\item Previous p. are allowed when user changes it
+\item Default p. change is not enforced on first login (eg. router)
+\end{itemize}
+\textbf{Problems - auth weakness}
+\begin{itemize}
+\item No checks on number of login attempts or user is locked out after too many attempts
 \item Login failure messages and response time reveal sensitive information
 \item Upon login failure wrong passwords are logged
+\item User is not requested to change p. periodically
+\item No secure channel/protocol is used
+\item Change p. are not reauthenticated
 \end{itemize}
-\textbf{Controls:}
+\textbf{Problems - password reset mechanism}
 \begin{itemize}
-\item Use PBKDF2 to hash passwords
-\item Iterate password hashing to increase response time
-\item Raise barriers to password reset (questions, secure delivery,extra authentication)
-\item Instead of locking out users let them retry after some time has passed
-\item Increase the response time when login failures occur
-\item Blacklist IP addresses (and alert the user) if too many login attempts occur
-\item Multifactor authentication: password + token
+\item P. can be reset upon end user request based on weak information
+\item Reset p. are specified by the user rather than being delivered securely
+\item P. are stored in clear
 \end{itemize}
+
 \section{Data storage}
 Wrong read/write permissions (eg. world writable)
 \begin{itemize}
@@ -229,22 +246,22 @@ Wrong read/write permissions (eg. world writable)
 \end{itemize}
 Sensitive data is hardcoded: an attacker having access to it can easily perform reverse engineering.\\
 Example: /home/apache/config instead of www/html\\
-Remark: scrub the memory once secret data is no longer needed.
-\subsection{Information leakage}
+Remark: scrub the memory once secret data is no longer needed.\\\\
+\textbf{Information leakage}
 \begin{itemize}
 \item \textbf{Time:} time measures can leak information (eg. first letter of password right/wrong)
 \item \textbf{Error messages:} user name correctness,version information, network addresses,reason for failure, path information
 \item \textbf{Stack information:} reported to the user when a function is called with less parameters than expected
 \end{itemize}
 \section{Access}
+\textbf{Problem.}
 \begin{itemize}
-\item Race conditions
-Problem. The same files are accessed by different applications. Since the file is accessed by name and not by \emph{handle} it is not locked!
+\item Race conditions: the same files are accessed by different applications. Since the file is accessed by name and not by \emph{handle} it is not locked!
 \item Fake files
 If the attacker provides a device name the process remains stuck until the device times out (DoS)
 \item traversal
 \end{itemize}
-Controls:
+\textbf{Controls:}
 \begin{itemize}
 \item Never use a file name for more than one operation. Use a file handle instead
 \item Keep applications files in a safe directory
@@ -308,7 +325,7 @@ echo $s;
 $ IN[n] = \wedge_{p \in pred(n)}OUT[p]$
 \item Direction of propagation: forward (look at predecessors) or backward (look at successors)
 \end{itemize}
-\textbf{Example of inputs:} set of values or booleans. For sets we can use union and intersection for the meet operator while for booleans we can use the logical and.\\\\
+Example of inputs: set of values or booleans. For sets we can use union and intersection for the meet operator while for booleans we can use the logical and.\\\\
 \textbf{Assumptions:}
 \begin{itemize}
 \item Identity is a valid transfer function: $OUT[n] = IN[n]$
@@ -331,7 +348,12 @@ while any $IN[n]$ or $OUT[n]$ changes across iteration
 	end for
 end while
 \end{lstlisting}
-\textbf{Def} bottom $\perp$ st. $\perp \leq x \forall x$\\\\
+\vspace{1em}
+\textbf{Convergence}\\
+\textbf{Def} bottom $\perp$ st. $\perp \leq x \forall x$\\
+If a bottom element exists convergence descends from monotonicity. If $V$ is finite then $\perp$ exists.\\\\
+$IN[n] = T \geq x_1 \geq \hdots x_k$\\
+$OUT[n] = f_n(T) \geq f_(x_1) \geq \hdots f_n(x_k)$\\\\
 \textbf{Examples of Flow analysis:}
 \begin{itemize}
 \item Taint analysis
@@ -340,37 +362,28 @@ end while
 \item Constant propagation
 \item Pointer analysis
 \end{itemize}
-% 		CONVERGENCE --------------------------------
-%
-%If a bottom element exists convergence descends from monotonicity. If $V$ is finite then $\perp$ exists.\\\\
-%
-%
-%\textbf{Meet over path}\\
-%$MOP[n] = \bigwedge_{p\in P_n}f_p(T)$ where $P_n$ are all the paths leading to node $n$.\\Note: if there are loops then $P_n$ is an infinite set.\\
-%Example: see slide n 13\\\\
-%\textbf{Def.} Exact solution $EX[n] = \bigwedge_{p \in feas(P_n)}f_p(T)$\\
-%\textbf{conservativity}\\
-%All possible executions are taken into account. The weakness is that there might be some extra values which do not belong to any solutions (false alarms). 
-%$$ EX[n] \geq MOP[n] \geq FA[n]$$
-%when transfer functions are distributive  flow analysis produces the MOP solution:
-%$$ f_n(x \wedge y) = f_n(x) \wedge f_n(y) \implies MOP[n] = FA[n] $$
-%\section{Interprocedural}
-%To avoid loops in graph you introduce \emph{call nodes}.
-%This new representation presents an issue: there are also unrealizable paths.
-%\textbf{Def. Realizable path}
-%\begin{itemize}
-%\item p is empty
-%\item The first return node is immediately preceded by a matching call node and the path obtained after removing these nodes is in turn realizable.
-%\end{itemize}
-%\begin{remark}
-%Note that unfeasible and unrealizable paths are different.
-%Example of unfeasible: if we have mutually exclusive conditions it will be impossible to have a path in which both conditions are true.
-%The latter violates the matching between call and return
-%\end{remark}
-%
-% --------------------------------------
 \newpage
-\subsection{Call string method}
+\textbf{Complements.}\\
+\textbf{Def.} Meet over path. $MOP[n] = \bigwedge_{p\in P_n}f_p(T)$ \\where $P_n$ are all the paths leading to node $n$. The idea is propagating the information over all possible paths, either feasible and infeasible. Basically we consider more information, we do not miss anything but more false alarms (safe but over conservative)\\\\
+\textbf{Def.} Exact solution $EX[n] = \bigwedge_{p \in feas(P_n)}f_p(T)$\\
+$$ EX[n] \geq MOP[n] \geq FA[n]$$
+when transfer functions are distributive  flow analysis produces the MOP solution:
+$$ f_n(x \wedge y) = f_n(x) \wedge f_n(y) \implies MOP[n] = FA[n] $$
+\subsection{Interprocedural flow analysis}
+What happens when there is a function or procedure called by the main?\\\\
+\textbf{Def.} an \emph{interprocedural path} is realizable (valid) if, once only call and return nodes are kepts:\\
+p is empty or the first return node is immediately preceded by a matching call node and the path obtained after removing these two nodes is in turn realizable.\\
+\begin{center}
+\includegraphics[scale=0.4]{img/interprocedural.jpg}
+\end{center}
+Nodes 1,2,3,4,5 are from \emph{main}, at node 2 (as well as node 4) a function is called. We can think of node 2 as two nodes: a call node C2 as successor of 1 and directly linked to 6, a return node R2 successor of 8.
+\begin{remark}
+Note that unfeasible and unrealizable paths are different.
+Example of unfeasible: if we have mutually exclusive conditions it will be impossible to have a path in which both conditions are true.
+The latter violates the matching between call and return
+\end{remark}
+\newpage
+\subsubsection{Call string method}
 Flow information $x$ is propagated together with the associated call string: $(x,CS)$
 \begin{center}
 \includegraphics[scale=0.5]{img/g2.jpg}
@@ -381,7 +394,7 @@ $OUT[6] = (y_1,C2),(y_2,C_4)$\\
 $OUT[7] = (z_1,C2),(z_2,C4)$\\
 $IN[8] = OUT[6] \wedge OUT[7] = (y_1 \wedge z_1,C2),(y_2 \wedge z_2,C4)$\\\\
 At return nodes, flow information is propagateed only to call nodes matching the last element of the call string, which is removed.
-\subsection{Functional method}
+\subsubsection{Functional method}
 A summary transfer function $\varphi_P$ is computed for each procedure $P$ and is used at each node where $P$ is called. The summary transfer functions $\varphi_P$ are known in closed form when $\wedge = \cup$ and transfer function $f_n$ have the following structure:
 $$ f_n(x) = GEN[n] \cup (x \setminus KILL[n])$$
 The cumulative transfer function is $\varphi_n(x) = GEN[\varphi_n] \cup (x \setminus KILL[\varphi_n])$ where:\\\\
@@ -421,6 +434,48 @@ while any $IN[n]$ or $OUT[n]$ changes across iteration
 	end for
 end while
 \end{lstlisting}
+\subsection{Dynamic taint analysis}
+Code instrumentation is used to store and update the taint status of variables and to interrupt the execution if a tainted variable containing a malicious payload is used at security critical statement (so called taint sink).\\
+Instrumentation can be done on source code,byte code and binary code.\\\\
+\textbf{Dynamic taint policy}
+\begin{itemize}
+\item Taint introduction: when variables become tainted
+\item Taint propagation: self explanatory
+\item Taint checking: detect attacks based on the values of tainted variables
+\end{itemize}
+\begin{tabular}{|c|c|}
+\hline 
+{\bf Attac}k & {\bf Taint sink} \\ 
+\hline 
+Buffer overflow & Return and jump addresses, function pointer, fp offset \\ 
+\hline 
+String format & Return and jump address, function pointer, sys call arguments \\ 
+\hline 
+Integer overflow & Integer computations \\ 
+\hline 
+SQL injection & Function call arguments \\ 
+\hline 
+Command injection & System call and function call arguments \\ 
+\hline 
+Error handling & Statements that may cause errors or throw exceptions \\ 
+\hline 
+XSS & Output statements \\ 
+\hline 
+File access & File opening and directory trasversal system \\ 
+\hline 
+\end{tabular} 
+\subsection{Comparison}
+\begin{tabular}{|c|c|c|}
+\hline 
+- & {\bf Static} & {\bf Dynamic} \\ 
+\hline 
+{\bf Results} & No false negatives & Under/over tainting (eg false -ve/+ve) \\ 
+\hline 
+{\bf Taint check} & False alarms & Precise alarms \\ 
+\hline 
+{\bf Performance} & No overhead & Major penalties \\ 
+\hline 
+\end{tabular} 
 \newpage
 \section{Penetration testing}
 Type of pentetration tests:

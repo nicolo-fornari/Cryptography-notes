@@ -1,0 +1,9 @@
+digraph graphname {
+     "Security Testing" -> "Attack Taxonomy";
+     "Security Testing" -> "Flow analysis" -> "Taint analysis" -> "Static";
+     "Taint analysis" -> "Dynamic";
+     "Security Testing" -> "Penetration testing" -> "Web scanners";
+	 "Penetration testing" -> "Whitebox fuzzers";
+	 "Penetration testing" -> "String solvers";
+	
+ }

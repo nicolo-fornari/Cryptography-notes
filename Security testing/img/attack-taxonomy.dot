@@ -1,0 +1,21 @@
+digraph graphname {
+ 	 "Attack Taxonomy" -> "C/C++";
+	 "C/C++" -> "Buffer Overflow";
+	 "C/C++" -> "String format";
+	 "C/C++" -> "Integer overflow";
+     "Attack Taxonomy" -> "Network" -> "Web" -> "XSS";
+     "Web" -> "SQLi";
+     "Web" -> "Error handling";
+     "Web" -> "Command injection";
+
+
+     "Network" -> "SSL/TLS";
+	 "Network" -> "DNS";
+
+	 "Attack Taxonomy" -> "Other";
+	 "Other" -> "Weak passwords";
+	 "Other" -> "Race conditions";
+	 "Other" -> "Random numbers";
+	 "Other" -> "Access";
+	 "Other" -> "Data storage";
+}
