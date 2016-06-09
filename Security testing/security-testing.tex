@@ -82,25 +82,98 @@ int main(int argc,char* argv[]) {
 }
 \end{minted}
 \begin{itemize}
-\item \%d \%d pops two integers in decimal format
-\item \%c \%c pops two characters
-\item \%p \%p pops to pointers in hexadecimal format
+\item \%d pops an integer in decimal format
+\item \%x pops an integer in hexadecimal format
+\item \%p pops a pointer in hexadecimal format
+\item \%c pops a character
+\item \%s pops a string
 \item \%10\$d pops $10^{th}$ integer
+\item \%n number of bytes written so far
 \end{itemize}
-\textbf{Vulnerable functions:} syslog, printf, fprintf, sprintf,snprintf\\\\
+\textbf{The stack and its role at format strings}\\
+The behaviour of the format function is controlled by the format string. The function retrieves the parameters requested by the format string from the stack. What if there is a mismatch between the format string and the actual arguments? Can the program pass to the compiler?
+\begin{itemize}
+\item \emph{printf()} is definied as a function of variable length of arguments. Therefore by looking at the number of arguemtns everythin looks fine.
+\item To find the mismatch the compiler needs to understand how \emph{printf()} works and usually compilers do not do this kind of analysis.
+\item Sometimes the format string is not a constant string, it is dynamically generated. Therefore there is no way for the compiler to find the mismatch.
+\end{itemize}
+Can \emph{printf()} detect the mismatch?
+\emph{printf()} fetches the arguments from the stack. Unless the stack is marked with a boundary  \emph{printf()} does not know that it runs out of the arguments provided to it\\\\
+\textbf{Vulnerable functions:} syslog, printf, fprintf, sprintf,snprintf
+\subsection{Attacks on format string}
+\textbf{Crashing the program.}
+\begin{verbatim}
+printf ("%s%s%s%s%s%s%s%s%s%s%s%s");
+\end{verbatim}
+For each \%s \emph{printf()} will fetch a number from the stack, treat it as an address and print out the memory contents pointed by this address as a string, until a NULL character is encountered. Since the number fetched might not be an address, the memory pointed by this number might not exist and the program will crash. It is also possible that the number happens to be a good address but the address space is protected and also in this case the program will crash.\\\\
+\textbf{Viewing the stack}
+\begin{verbatim}
+printf("%08x %08x %08x %08x\n");
+\end{verbatim}
+This instructs the printf function to retrieve five parameters from the stack and display them as 8-digit padded hexadecimal numbers.\\\\
+\textbf{Writing an integer to nearly any location in the process memory}
+\begin{verbatim}
+printf("abcde%n",&i);
+\end{verbatim}
+It causes to write 5 into variable $i$. The same approach of the following attack can be used just replacing \%s with \%n. Using this attack it is possible to overwrite program flags that control access privileges and return address on the stack, function pointers, etc.\\\\
+\textbf{Viewing memory at any location}\\\\
+We have to supply an address of the memory: we can not change the code, we can only supply the format string. The format string is usually located on the stack. If we encode the target address in the format string, it will be in the stack.
+\begin{minted}[frame=lines,
+]{c}
+int main(int argc, char *argv[]) {
+char user_input[100];
+// ... other variables and statements
+scanf("%s",user_input);
+printf(user_input);
+return 0;
+}
+\end{minted}
+\newpage
+If we can force the printf to obtain the address from the format string we can control the address.
+\begin{verbatim}
+printf("\x10\x01\x48\x08 %x %x %x %x %s");
+\end{verbatim}
+The four bytes of the target address are  $\setminus x10 \setminus x01 \setminus x48 \setminus x08$. \%x causes the stack pointer to move towards the format string. Here is how the attack works:
+\begin{Verbatim}
+ ---------------------------
+|          %s              | <--+
+|---------------------------    |
+|          %x              |    |
+|---------------------------    |
+|          %x              |    |  
+|---------------------------    | user_input[]
+|          %x              |    |  
+|---------------------------    |
+|          %x              |    |
+|---------------------------    |
+|      0x10014808          | <--+ %s prints what is pointed by this address
+|---------------------------
+|                          | print this for the 4th %x
+|---------------------------
+|                          |
+|---------------------------
+|                          |
+|---------------------------
+|                          | print this for the 1st %x
+|---------------------------
+|  Address of user_input[] |
+|--------------------------|
+\end{Verbatim}
+Basically we use \%x to move printf's pointer towards the address that we stored in the format string. Once we reach the destination we pass \%s to printf causing it to print the content at address 0x10014808. the key challenge in this attack is to figure out the distance between \emph{user\_input[]} and the address passed to printf.
+\subsection{Countermeasures}
 Solutions that do NOT work
 \begin{itemize}
 \item Remove the \%n feature: it is part of the ANSI C specification and lots of programs need this feature
 \item Permit only static format strings: many programs generate format strings dynamically
 \item Count the arguments to printf: this is not possible with the C vararg mechanism and a new safe vararg would be incompatible with existing libraries and programs.
 \end{itemize}
+\newpage
 \textbf{Controls.} 
 \begin{itemize}
 \item Use constant strings as string formats
 \item Sanitize user input
 \item Use stream operator "$<<$" in C++ rather that functions of the \emph{printf} family
 \end{itemize}
-\newpage
 \subsection{FormatGuard}
 The C preprocessor is used to count the actual number of arguments passed dynamically to printf, raising an intrusion alert and killing the process when an attack is detected.\\\\
 \textbf{Limitations.} 
