@@ -1,36 +1,26 @@
-\documentclass[10pt,a4paper]{article}
+\documentclass[10pt,a4paper]{book}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{minted}
+\usepackage{xcolor}
+\usepackage{graphicx}
 \definecolor{mygray}{gray}{0.9}
-\title{Programmazione II}
+\title{Programming personal reference\\ \Large Concepts in a nutshell}
 \author{Nicolò Fornari}
 \begin{document}
 \maketitle
-Concetti:
-\begin{itemize}
- \setlength\itemsep{0em}
-\item Ereditarietà
-\item Collections
-\item Classi Abstract e Polimorfismo
-\item Interface
-\item Override
-\item Overload
-\item Casting
-\item Generics
-\item Eventi
-\item Static
-\item Final
-\end{itemize}
-\newpage
-\section{Ereditarietà}
+\chapter{OOP}
+\section{Inheritance}
+\includegraphics[scale=0.7]{img/inheritance.jpg}
+\newline
 Così come per scope considero la variabile più prossima, per le classi cerco il metodo più prossimo.\\\\
 In realtà ogni classe che sembra non ereditare niente eredità da Object.\\
 La classe Object è la root di tutta la gerarchia di classi.\\\\
 Se voglio usare un metodo della superclasse: super.metodo()\\
-Si può iterare: super.super.metodo()\\\\
+Si può iterare: super.super.metodo()
+\newpage
 \textbf{Esempio}\\
 \begin{minted}[
 bgcolor=mygray,
@@ -49,7 +39,31 @@ public class MySlider extends javafx.scene.control.Slider {
 }
 \end{minted}
 \newpage
-\section{Classi abstract}
+
+\section{Polimorphism}
+Voglio creare a runtime (Dynamic Binding) oggetti diversi a seconda delle scelte dell'utente\\\\
+\begin{minted}[
+bgcolor=mygray,
+]{java}
+public class Main {
+    public static void main(String[] args) {
+        Stack s;
+        if (args[0] != "")
+            s=new Coda();
+        else
+            s = new Pila();
+        s.inserisci(1);
+        s.inserisci(2);
+        s.inserisci(3);
+        for (int k=0;k<=4;k++){
+            int v=s.estrai();
+            System.out.println(v);
+        }
+    }
+
+\end{minted}
+\newpage
+\section{Abstraction}
 Non possono essere istanziate,devono essere subclassate.\\\\
 \begin{minted}[
 bgcolor=mygray,
@@ -90,28 +104,19 @@ class Pila extends Stack {
 
 \end{minted}
 \newpage
-\section{Polimorfismo}
-Voglio creare a runtime (Dynamic Binding) oggetti diversi a seconda delle scelte dell'utente\\\\
-\begin{minted}[
-bgcolor=mygray,
-]{java}
-public class Main {
-    public static void main(String[] args) {
-        Stack s;
-        if (args[0] != "")
-            s=new Coda();
-        else
-            s = new Pila();
-        s.inserisci(1);
-        s.inserisci(2);
-        s.inserisci(3);
-        for (int k=0;k<=4;k++){
-            int v=s.estrai();
-            System.out.println(v);
-        }
-    }
-
-\end{minted}
+\section{Encapsulation}
+Encapsulation in Java is a mechanism of wrapping the data (variables) and code acting on the data (methods) together as a single unit. In encapsulation, the variables of a class will be hidden from other classes, and can be accessed only through the methods of their current class (called setter and getter).\\\\
+\textbf{Implementation:}
+\begin{itemize}
+\item Declare the variables of a class as private.
+\item Provide public setter and getter methods to modify and view the variables values
+\end{itemize} 
+\textbf{Benefits}
+\begin{itemize}
+\item The fields of a class can be made read-only or write-only.
+\item A class can have total control over what is stored in its fields.
+\item The users of a class do not know how the class stores its data. A class can change the data type of a field and users of the class do not need to change any of their code.
+\end{itemize}
 \newpage
 \section{Interfaces}
 \begin{tabular}{|c|c|}
@@ -154,6 +159,33 @@ public class drawCircle implements EventHandler {
 } 
 
 \end{minted}
+\newpage
+
+\section{Modifiers}
+\textbf{Access modifiers}
+\begin{itemize}
+\item (default) visible to the package
+\item private: visible to the class only
+\item protected: visible to the package and all subclasses
+\item public: visible to the world
+\end{itemize}
+\textbf{Non access}
+\begin{itemize}
+\item static\\
+Variables and methods associated to a class rather than to an object are static. Static variables are used as shared variables among instances.\\
+Static methods can be called without any instance of the class.
+\item final
+\begin{enumerate}
+\item final variables are constant
+\item final methods can not be overwritten
+\item final classes can not be subclassed
+\end{enumerate}
+\item abstract
+\begin{enumerate}
+\item abstract classes must be subclassed and can not be instantiated
+\item abstract methods must be overwritten
+\end{enumerate}
+\end{itemize}
 \newpage
 \section{Collections}
 Una collection è un oggetto che raggruppa elementi multipli in un'unica entità, all' interno di cui i dati possono essere trattati o trasferiti da un metodo ad un altro.\\\\
@@ -387,4 +419,59 @@ public class SelfListener extends Application implements EventHandler {
     }
 
 \end{minted}
+\newpage
+\section{Best practices}
+\begin{itemize}
+\item {\bf Read code}\\
+It is impossible to become a good writer without having read books written by others.
+\item \textbf{Documentation}
+\item \textbf{Follow the defined standards}\\
+File, functions and variable naming conventions, list of do's and don'ts, history, indentation, comments.
+\item \textbf{Code should be written to be reviewed}\\
+Self review to avoid
+\begin{enumerate}
+\item Not following standards
+\item Not keeping performance in mind
+\item History, indentation, comments not appropriate
+\item Poor readability
+\item Open files not closed
+\item Allocated memory not released
+\item Too much hard coding
+\item Too many global variables
+\item Poor error handling
+\item No modularity
+\item Repeated code
+\end{enumerate}
+\item \textbf{Testing} is mandatory after every small or big change
+\item \textbf{Keep code safe} with code versioning software
+\item \textbf{Tools and techniques handy}
+\end{itemize}
+
+\textbf{Principio di Parna} il committente di una funzione deve dare all'implementatore tutte le informazioni necessarie a realizzare la funzione e nulla di più.
+\chapter{Data structures}
+\section*{Classification}
+\begin{itemize}
+\item \textbf{Linear:} data are in sequence
+\item \textbf{Non Linear}
+\item \textbf{Static:} the number of elements remains constant
+\item \textbf{Dynamic:} the number of elements can change in time
+\item \textbf{Homogeneous:} elements of the same type
+\item \textbf{Non homogenenous}
+\end{itemize}
+\section{Sequence}
+Dynamic and linear, possibly containing duplicates. To access a generic item it is necessary to scan the entire sequence either from the beginning or from the end.
+\section{Set}
+Collection of different elements (no duplicates are allowed). Elements do not have a position.
+\section{Dictionary}
+It is a key-value map.\\
+\textbf{Example:} P2P systems use a DHT (distribute hash table).
+\section{Trees and graphs}
+\textbf{Example:} the base structure of a file system is a tree. Directories are the vertices while files are the leaves. Since some file systems allow to list the same file in multiple directories by the means of symbolic links, such file systems are DAG (directed acyclic graphs).
+\section{Stack and queues}
+\section{Queues with priority and disjoint sets}
+\chapter{Programming techniques}
+\section{Divide et impera}
+\section{Dynamic programming}
+\section{Greedy}
+\section{Backtrack}
 \end{document}
