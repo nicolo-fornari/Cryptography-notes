@@ -104,4 +104,32 @@ The Output Feedback (OFB) mode makes a block cipher into a synchronous stream ci
 \includegraphics[scale=0.2]{img/CTR.png}
 \newline 
 Counter mode turns a block cipher into a stream cipher. It generates the next keystream block by encrypting successive values of a "counter". The counter can be any function which produces a sequence which is guaranteed not to repeat for a long time, although an actual increment-by-one counter is the simplest and most popular.
+\newpage
+\section{Cryptographic hash functions}
+\begin{itemize}
+\item SHA-2, SHA-3
+\item Scrypt
+\item Argon
+\item BLAKE
+\end{itemize}
+\subsection{MAC - Message Authentication Code}
+A MAC algorithm, sometimes called a keyed (cryptographic) hash function accepts as input a secret key and an arbitrary-length message to be authenticated, and outputs a MAC. The MAC value protects both a message's data integrity as well as its authenticity, by allowing verifiers (who also possess the secret key) to detect any changes to the message content.
+\begin{remark}
+MACs differ from digital signatures as MAC values are both generated and verified using the same secret key. This implies that the sender and receiver of a message must agree on the same key before initiating communications, as is the case with symmetric encryption. For the same reason, MACs do not provide the property of non-repudiation offered by signatures specifically in the case of a network-wide shared secret key
+\end{remark}
+\section{Digital Signature}
+A digital signature is a mathematical scheme for demonstrating the authenticity of a digital message or documents. Digital signature provides
+\begin{itemize}
+\item {\bf Authentication:} the recipient has reason to believe that the message was created by a known sender
+\item {\bf Non repudiation:} the sender cannot deny having sent the message
+\item {\bf Integrity:} the message was not altered
+\end{itemize}
+Some algorithms:
+\begin{itemize}
+\item RSA
+\item ECDSA
+\end{itemize}
+\section{Key derivation function}
+\section{Certificates}
+\subsection{Certificate pinning}
 \end{document}

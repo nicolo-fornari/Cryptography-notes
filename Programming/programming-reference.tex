@@ -14,14 +14,11 @@
 \chapter{OOP}
 \section{Inheritance}
 \includegraphics[scale=0.7]{img/inheritance.jpg}
-\newline
-Così come per scope considero la variabile più prossima, per le classi cerco il metodo più prossimo.\\\\
-In realtà ogni classe che sembra non ereditare niente eredità da Object.\\
-La classe Object è la root di tutta la gerarchia di classi.\\\\
-Se voglio usare un metodo della superclasse: super.metodo()\\
-Si può iterare: super.super.metodo()
+\\\\
+With classes extending other classes when I call a method the nearest one is executed. The concept is similar with variable scope.\\
+Every class inherites from Object.
 \newpage
-\textbf{Esempio}\\
+\textbf{Example}\\\\
 \begin{minted}[
 bgcolor=mygray,
 ]{java}
@@ -41,7 +38,8 @@ public class MySlider extends javafx.scene.control.Slider {
 \newpage
 
 \section{Polimorphism}
-Voglio creare a runtime (Dynamic Binding) oggetti diversi a seconda delle scelte dell'utente\\\\
+Polymorphism is the ability of an object to take on many forms. Any Java object that can pass more than one IS-A test is considered to be polymorphic. In Java, all Java objects are polymorphic since any object will pass the IS-A test for their own type and for the class Object.
+\\\\
 \begin{minted}[
 bgcolor=mygray,
 ]{java}
@@ -64,7 +62,13 @@ public class Main {
 \end{minted}
 \newpage
 \section{Abstraction}
-Non possono essere istanziate,devono essere subclassate.\\\\
+in Object-oriented programming, abstraction is a process of hiding the implementation details from the user, only the functionality will be provided to the user. In other words, the user will have the information on what the object does instead of how it does it.
+\begin{itemize}
+\item If a class has an abstract method then it has to be delcared abstract
+\item An abstract class can not be instantiated
+\item To use an abstract class you have to inherit it from another class and provide the implementation for the declared methods
+\end{itemize}
+
 \begin{minted}[
 bgcolor=mygray,
 ]{java}
@@ -79,7 +83,7 @@ public abstract class Stack extends LinkedList {
 }
 
 \end{minted}
-\\\\
+\\\\\\
 \begin{minted}[
 bgcolor=mygray,
 ]{java}
@@ -119,18 +123,17 @@ Encapsulation in Java is a mechanism of wrapping the data (variables) and code a
 \end{itemize}
 \newpage
 \section{Interfaces}
+An interface is a collection of abstract methods.\\\\
 \begin{tabular}{|c|c|}
 \hline 
 Interface & Abstract class \\ 
 \hline 
-Solo metodi non implementati & Può avere metodi implementati e variabili.\\
-Non può contenere variabili & -\\
-Una classe può implementare più interfacce alla volta. & Non vale l'ereditarietà multipla\\
+Only non implemented methods & It can have implemented methods\\
+No variables & -\\
+A class cna implement multiple interfaces & No multiple hierarchy\\
 \hline 
 \end{tabular} 
-\\\\
-Non è possibile che una classe erediti da due classi astratte contemporaneamente, perché se viene chiamato un metodo non sovrascritto dalla sottoclasse ed implementato in entrambe le superclassi astratte, ci sarebbe l'abiguità di andare a pescare da una superclasse piuttosto che dall'altra.
-\\\\
+\\\\\\
 \begin{minted}[
 bgcolor=mygray,
 ]{java}
@@ -192,19 +195,8 @@ Static methods can be called without any instance of the class.
 \end{itemize}
 \newpage
 \section{Collections}
-Una collection è un oggetto che raggruppa elementi multipli in un'unica entità, all' interno di cui i dati possono essere trattati o trasferiti da un metodo ad un altro.\\\\
-\begin{tabular}{|c|c|c|c|}
-\hline 
-- & Presenza di duplicati  & Accessibile  & Ordine di inserimento\\
-- & (come identificatore) & con un indice & mantenuto \\
-\hline 
-Set & No & No & No \\ 
-\hline 
-List & Si & Si & Si \\ 
-\hline 
-\end{tabular} 
+A collection is an object that groups multiple elements in a single entity. Since a collection takes as input Objects, if I want to store primitive variables (eg. integers) I need a wrapper. 
 \\\\
-Poichè una Collection prende in input degli Oggetti, se voglio creare una Collection di variabili primitive (eg interi) ho bisogno di un wrapper per la variabile (eg. Integer)\\\\
 \begin{minted}[
 bgcolor=mygray,
 ]{java}
@@ -229,8 +221,7 @@ public class Mazzo {
 
 \end{minted}
 \\\\
-The Collections class provides three constants, representing the empty Set, the empty List, and the 
-empty Map 
+The Collections class provides three constants:
 \begin{itemize}
 \item $Collections.EMPTY\_SET $
 \item $Collections.EMPTY\_LIST $
@@ -241,11 +232,8 @@ don't want to provide any values at all.
 
 \newpage
 \section{Object ordering - comparable}
-A List l may be sorted as follows: \\
-Collections.sort(l); \\\\
-If the list consists of String elements, it will be sorted into lexicographic (alphabetical) order. \\
-If it consists of Date elements, it will be sorted into chronological order. \\
-How does Java know how to do this? \\
+A List \textit{l} may be sorted as follows:  Collections.sort(\textit{l}); \\\\
+If the list consists of String elements, it will be sorted into lexicographic (alphabetical) order. If it consists of Date elements, it will be sorted into chronological order. How does Java know how to do this? \\
 String and Date both implement the Comparable interface. The Comparable interfaces provides a natural ordering for a class, which allows objects of that class to be sorted automatically. \\\\
 int compareTo(Object o) \\\\
 Compares this object with the specified object for order. Returns a negative integer, zero, or a positive integer as this object is less than, equal to, or greater than the specified object. 
@@ -296,7 +284,7 @@ public class Giocatore {
 }
 
 \end{minted}
-\\\\
+\\\\\\
 \begin{minted}[
 bgcolor=mygray,
 ]{java}
@@ -311,7 +299,7 @@ public class ComparatorBySeed implements Comparator {
 }
 
 \end{minted}
-\\\\
+\\\\\\
 \begin{minted}[
 bgcolor=mygray,
 ]{java}
@@ -327,7 +315,7 @@ public class ComparatorByValue implements Comparator {
 \end{minted}
 \newpage
 \section{Listener}
-\textbf{Listener esterno}\\\\
+\textbf{External listener}\\
 \begin{minted}[
 bgcolor=mygray,
 ]{java}
@@ -335,7 +323,7 @@ Listener lsn = new Listener(this);
 sp.addEventHandler(MouseEvent.MOUSE_CLICKED, lsn);
 
 \end{minted}
-\\\\
+\\\\\\
 \begin{minted}[
 bgcolor=mygray,
 ]{java}
@@ -355,7 +343,7 @@ public class Listener implements EventHandler {
 
 \end{minted}
 \\\\
-\textbf{Listener interno}\\\\
+\textbf{Internal listener}\\
 \begin{minted}[
 bgcolor=mygray,
 ]{java}
@@ -377,7 +365,7 @@ class Reset implements EventHandler {
 
 \end{minted}
 \\\\
-\textbf{Listener anonimo}\\\\
+\textbf{Anonymous listener}\\
 \begin{minted}[
 bgcolor=mygray,
 ]{java}
@@ -395,7 +383,7 @@ c.setOnMouseClicked(new EventHandler<MouseEvent>() {
 \begin{minted}[
 bgcolor=mygray,
 ]{java}
-public class SelfListener extends Application implements EventHandler {
+public class SelfLst extends Application implements EventHandler{
     
     @Override
     public void start(Stage primaryStage) {
