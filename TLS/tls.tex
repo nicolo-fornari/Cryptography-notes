@@ -82,11 +82,15 @@ Most modes require a unique binary sequence, often called an initialization vect
 \subsection{Electronic Codebook (ECB)}
 \includegraphics[scale=0.2]{img/ECB.png}
 \newline
-The message is divided into blocks, and each block is encrypted separately. The disadvantage of this method is that identical plaintext blocks are encrypted into identical ciphertext blocks; thus, it does not hide data patterns well. In some senses, it doesn't provide serious message confidentiality, and it is not recommended for use in cryptographic protocols at all
+The message is divided into blocks, and each block is encrypted separately. The disadvantage of this method is that identical plaintext blocks are encrypted into identical ciphertext blocks; thus, it does not hide data patterns well. In some senses, it doesn't provide serious message confidentiality, and it is not recommended for use in cryptographic protocols at all\\\\
+Example 1: you see patterns in an image\\
+Example 2: headers are standard hence the attacker has pairs (PT,CT) for free!
+\begin{remark} it is good to store short information such as password \end{remark}
 \subsection{Cipher Block Chaining (CBC)}
 \includegraphics[scale=0.2]{img/CBC.png}
 \newline
  In CBC mode, each block of plaintext is XORed with the previous ciphertext block before being encrypted. This way, each ciphertext block depends on all plaintext blocks processed up to that point. To make each message unique, an initialization vector must be used in the first block.
+\begin{remark} usually the IV is encrypted with ECB. \end{remark}
 \subsection{Propagating Cipher Block Chaining (PCBC)}
 \includegraphics[scale=0.2]{img/PCBC.png}
 \newline 
@@ -95,15 +99,58 @@ In PCBC mode, each block of plaintext is XORed with both the previous plaintext 
 \includegraphics[scale=0.2]{img/CFB.png}
 \newline 
 The Cipher Feedback (CFB) mode, a close relative of CBC, makes a block cipher into a self-synchronizing stream cipher. Operation is very similar; in particular, CFB decryption is almost identical to CBC encryption performed in reverse.
-By definition of self-synchronising cipher, if part of the ciphertext is lost (e.g. due to transmission errors), then receiver will lose only some part of the original message (garbled content), and should be able to continue correct decryption after processing some amount of input data.
+By definition of self-synchronising cipher, if part of the ciphertext is lost (e.g. due to transmission errors), then receiver will lose only some part of the original message (garbled content), and should be able to continue correct decryption after processing some amount of input data.\\\\
+Remarks:
+\begin{itemize} 
+\item 8 bits encrypted at a time. Then there is a shift in the IV. The image above is too generic.  
+\item Another important problem is the error propagation: if I receive for instance $\bar{c}_1,c_2..,c_n$ then I can not decrypt anything! This problem is solved with OFB because the 8-bits are used in the next IV before being XORed with the PT
+\item It is used for video.
+\end{itemize}
 \subsection{Output Feedback (OFB)}
 \includegraphics[scale=0.2]{img/OFB.png}
 \newline 
 The Output Feedback (OFB) mode makes a block cipher into a synchronous stream cipher. It generates keystream blocks, which are then XORed with the plaintext blocks to get the ciphertext. Just as with other stream ciphers, flipping a bit in the ciphertext produces a flipped bit in the plaintext at the same location. This property allows many error correcting codes to function normally even when applied before encryption.
+\begin{remark} this modes corrects the error propagation of CFB however  it is still not parallelizable. Here it comes CTR. \end{remark}
 \subsection{Counter (CTR)}
 \includegraphics[scale=0.2]{img/CTR.png}
 \newline 
 Counter mode turns a block cipher into a stream cipher. It generates the next keystream block by encrypting successive values of a "counter". The counter can be any function which produces a sequence which is guaranteed not to repeat for a long time, although an actual increment-by-one counter is the simplest and most popular.
+\begin{remark} it is used in ATM, IPSEC. \end{remark}
+
+\begin{remark}
+in this mode decryption is performed by swapping around PT and CT hence the block cipher is used only in ecryption mode!
+\end{remark}
+\subsection{XTS}
+The scenario with hard disk is completely different from a TLS connection. With an hard disk there is a huge quantity of information.
+In an hard diks a sector is made of blocks.\\
+$$Sector_1: [block_1, ... , block_n]$$
+$$Sector_2: [block_1, ... , block_n]$$
+{\bf Problem 1:} the same info can be saved in different blocks or in different sectors in the same way. It is the same issue of ECB. To overcome this problem the encryption depends on the sector number $i$ and block number $j$.\\\\
+Definitions:
+\begin{itemize}
+\item $Key = Key_1 || Key_2$
+\item $P_j$: j-th block of PT. All blocks except possibly the last one have length 128 bits.
+\item $C_j$: j-th block of CT. All blocks except possibly the last one have length 128 bits.
+\item i: sector number
+\item j: block number
+\item $\alpha$ primitive element in $GF(2^128)$
+\item $\otimes$: modular multiplication of two polynomials  modulo $x^{128}+x^7+x^2+x+1$
+\end{itemize}
+\begin{center}
+\includegraphics[scale=0.3]{img/XTS-encryption.png}
+\end{center}
+XTS\_AES block operations:
+\begin{itemize}
+\item $T = E(K_2,i) \otimes \alpha^j$
+\item $PP = P \oplus T$
+\item $CC = E(K_1,PP)$
+\item $C = CC \oplus T$
+\end{itemize}
+\newpage
+\textbf{Problem 2:} consider encrypting a file of 129 bits with a block size of 128 bits. How is it possible to keep safe even the last bit which is saved in a new block?
+\begin{center}
+\includegraphics[scale=0.45]{img/XTS-mode.png}
+\end{center}
 \newpage
 \section{Cryptographic hash functions}
 \begin{itemize}
